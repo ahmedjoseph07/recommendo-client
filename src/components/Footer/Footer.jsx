@@ -37,14 +37,11 @@ const Footer = () => {
 
                 <nav>
                     <header className="footer-title text-accent">Legal</header>
-                    <Link className="link link-hover hover:text-secondary">
+                    <Link to='/terms' className="link link-hover hover:text-secondary">
                         Terms of use
                     </Link>
-                    <Link className="link link-hover hover:text-secondary">
+                    <Link to='/policy' className="link link-hover hover:text-secondary">
                         Privacy policy
-                    </Link>
-                    <Link className="link link-hover hover:text-secondary">
-                        Cookie policy
                     </Link>
                 </nav>
 

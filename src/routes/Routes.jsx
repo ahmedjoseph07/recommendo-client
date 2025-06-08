@@ -4,6 +4,8 @@ import AllQueriespage from "../pages/AllQueriespage";
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
+import TermsPage from "../pages/TermsPage";
+import PolicyPage from "../pages/PolicyPage";
 
 export const router = createBrowserRouter([
     {
@@ -26,6 +28,14 @@ export const router = createBrowserRouter([
             {
                 path: "/contact",
                 element: <ContactPage/>
+            },
+            {
+                path: '/terms',
+                element: <TermsPage/>
+            },
+            {
+                path: "/policy",
+                element: <PolicyPage/>
             }
         ]
     },
