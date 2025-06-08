@@ -6,13 +6,25 @@ import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal.jsx/RegisterModal";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import Swal from "sweetalert2";
 const Navbar = () => {
+    const { user, logOut } = use(AuthContext);
 
-    const { user,logOut } = use(AuthContext);
-
-    const handleLogout = ()=>{
+    const handleLogout = () => {
         logOut()
-    }
+            .then(() => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "warning",
+                    title: "User logged out succesfully",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -61,7 +73,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="w-full border-b shadow-sm">
+        <div className="w-full border-b border-secondary shadow-sm">
             <div className="py-4 w-10/12 md:w-11/12 mx-auto flex justify-between items-center  px-4 relative z-20">
                 {/* Navbar Start */}
                 <div className="flex items-center gap-4">
@@ -78,7 +90,7 @@ const Navbar = () => {
                         </button>
                     </div>
 
-                    <Link to="/" className="w-12">
+                    <Link  to="/" className="w-12 hidden md:block">
                         <img src={logo} alt="Logo" />
                     </Link>
                     <Link
@@ -98,8 +110,9 @@ const Navbar = () => {
                     <ThemeToggleBtn />
                     {user ? (
                         <>
-                        <img className="w-10" src={user.photoURL} alt="" />
-                            <button onClick={handleLogout}
+                            <img className="w-10" src={user.photoURL} alt="" />
+                            <button
+                                onClick={handleLogout}
                                 className="btn btn-accent btn-outline text-neutral">
                                 Logout
                             </button>

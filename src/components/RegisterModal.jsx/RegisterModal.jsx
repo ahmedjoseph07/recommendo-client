@@ -7,11 +7,19 @@ const RegisterModal = () => {
     const { googleLogin, createUser, setUser } = use(AuthContext);
     const navigate = useNavigate();
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleGoogleLogin = async () => {
         try {
             await googleLogin();
             document.getElementById("register_modal").checked = false;
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User logged succesfully",
+                showConfirmButton: false,
+                timer: 1200,
+            });
             navigate("/");
         } catch (err) {
             console.error("Google Login failed:", err);
@@ -20,6 +28,7 @@ const RegisterModal = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const form = e.target;
         const formData = Object.fromEntries(new FormData(form).entries());
         const { displayName, email, password, photoURL } = formData;
@@ -54,9 +63,11 @@ const RegisterModal = () => {
                             displayName,
                             photoURL,
                         });
+
                         document.getElementById(
                             "register_modal"
                         ).checked = false;
+                        e.target.reset();
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
@@ -64,6 +75,7 @@ const RegisterModal = () => {
                             showConfirmButton: false,
                             timer: 1200,
                         });
+
                         navigate("/");
                     })
                     .catch((err) => {
@@ -71,14 +83,18 @@ const RegisterModal = () => {
                     });
             })
             .catch((err) => {
-                if(err.message== "Firebase: Error (auth/invalid-email)."){
+                if (err.message == "Firebase: Error (auth/invalid-email).") {
                     setError("Must enter a valid email");
-                }else if(err.message=="Firebase: Error (auth/email-already-in-use)."){
-                    setError("Email already in use")
-                }else{
-                    setError(err.message)
+                } else if (
+                    err.message ==
+                    "Firebase: Error (auth/email-already-in-use)."
+                ) {
+                    setError("Email already in use");
+                } else {
+                    setError(err.message);
                 }
-            });
+            })
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -127,8 +143,16 @@ const RegisterModal = () => {
                             onChange={() => setError("")}
                         />
                         {error && <p className="text-error text-xs">{error}</p>}
-                        <button className="btn btn-primary btn-outline border-secondary/30 border-1 w-full mt-2">
-                            Sign Up
+                        <button
+                            disabled={loading}
+                            className="btn btn-primary btn-outline border-secondary/30 border-1 w-full mt-2">
+                            {loading ? (
+                                <>
+                                    <span className="loading loading-spinner text-accent loading-sm"></span>
+                                </>
+                            ) : (
+                                "Sign Up"
+                            )}
                         </button>
                     </form>
 
