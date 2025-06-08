@@ -21,16 +21,16 @@ const Footer = () => {
 
                 <nav>
                     <header className="footer-title text-accent">Pages</header>
-                    <Link className="link link-hover hover:text-secondary">
+                    <Link to='/' className="link link-hover hover:text-secondary">
                         Home
                     </Link>
-                    <Link className="link link-hover hover:text-secondary">
+                    <Link to='/queries' className="link link-hover hover:text-secondary">
                         Queries
                     </Link>
-                    <Link className="link link-hover hover:text-secondary">
+                    <Link to='/about' className="link link-hover hover:text-secondary">
                         About
                     </Link>
-                    <Link className="link link-hover hover:text-secondary">
+                    <Link to='/contact' className="link link-hover hover:text-secondary">
                         Contact
                     </Link>
                 </nav>
