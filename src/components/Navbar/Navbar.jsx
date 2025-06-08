@@ -3,6 +3,8 @@ import { Link, NavLink } from "react-router";
 import ThemeToggleBtn from "../ThemeToggleBtn";
 import logo from "../../assets/logo.png";
 import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
+import LoginModal from "../LoginModal/LoginModal";
+import RegisterModal from "../RegisterModal.jsx/RegisterModal";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -35,8 +37,8 @@ const Navbar = () => {
     );
 
     return (
-        <div className="w-full border-b">
-            <div className="py-4 w-10/12 md:w-11/12 mx-auto flex justify-between items-center shadow-sm px-4 relative z-20">
+        <div className="w-full border-b shadow-sm">
+            <div className="py-4 w-10/12 md:w-11/12 mx-auto flex justify-between items-center  px-4 relative z-20">
                 {/* Navbar Start */}
                 <div className="flex items-center gap-4">
                     {/* Mobile Hamburger / Cross Toggle */}
@@ -70,11 +72,9 @@ const Navbar = () => {
                 {/* Navbar End */}
                 <div className="flex items-center gap-4">
                     <ThemeToggleBtn />
-                    <Link
-                        className="btn btn-primary btn-outline normal-case"
-                        to="/login">
+                    <label htmlFor="login_modal" className="btn btn-primary btn-outline normal-case">
                         Login
-                    </Link>
+                    </label>
                 </div>
 
                 {/* Mobile Dropdown with Slide Animation */}
@@ -87,6 +87,8 @@ const Navbar = () => {
                     <ul className="space-y-4">{navLinks}</ul>
                 </div>
             </div>
+        <LoginModal/>
+        <RegisterModal/>
         </div>
     );
 };
