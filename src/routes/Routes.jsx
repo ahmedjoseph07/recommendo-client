@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import Root from "../layout/Root";
 import AllQueriespage from "../pages/AllQueriespage";
+import HomePage from "../pages/HomePage";
 
 export const router = createBrowserRouter([
     {
@@ -9,7 +10,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 index:true,
-                path: "/queries",
+                path: "/",
+                element: <HomePage/>
+            },
+            {
+                path:  "/queries",
                 element: <AllQueriespage/>
             }
         ]

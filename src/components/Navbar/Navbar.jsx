@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import ThemeToggleBtn from "../ThemeToggleBtn";
 import logo from "../../assets/logo.png";
@@ -7,6 +7,18 @@ import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal.jsx/RegisterModal";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
+        useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const navItemStyle = "hover:text-secondary hover:scale-105 transition-transform duration-100 ease-in-out";
     const navLinks = (
@@ -78,13 +90,13 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile Dropdown with Slide Animation */}
-                <div
-                    className={`absolute left-4 right-4 top-20 mx-auto w-[90%] border border-secondary text-neutral shadow-lg rounded-md p-6 space-y-4 transform transition-all duration-300 ease-in-out lg:hidden ${
+                <div ref={dropdownRef}
+                    className={`absolute left-4 right-4 top-20 mx-auto w-[90%] border border-secondary text-neutral shadow-lg space-y-4 transform transition-all duration-300 ease-in-out lg:hidden ${
                         isOpen
-                            ? "translate-y-4 opacity-100 pointer-events-auto"
+                            ? "translate-y-8 opacity-100 pointer-events-auto"
                             : "-translate-y-8 opacity-0 pointer-events-none"
                     }`}>
-                    <ul className="space-y-4">{navLinks}</ul>
+                    <ul className="text-center bg-secondary">{navLinks}</ul>
                 </div>
             </div>
         <LoginModal/>

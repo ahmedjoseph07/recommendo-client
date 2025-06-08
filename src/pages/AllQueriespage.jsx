@@ -3,7 +3,7 @@ import React from 'react';
 const AllQueriespage = () => {
     return (
         <div>
-            All queries
+            All Queries
         </div>
     );
 };
