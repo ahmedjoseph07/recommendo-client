@@ -1,6 +1,21 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { useNavigate } from "react-router";
 
 const LoginModal = () => {
+    const { googleLogin } = use(AuthContext);
+    const navigate = useNavigate();
+
+    const handleGoogleLogin = async () => {
+        try {
+            await googleLogin();
+            document.getElementById("login_modal").checked = false;
+            navigate("/");
+        } catch (err) {
+            console.error("Google Login failed:", err);
+        }
+    };
+
     return (
         <div>
             <input type="checkbox" id="login_modal" className="modal-toggle" />
@@ -29,7 +44,9 @@ const LoginModal = () => {
 
                     <div className="divider text-neutral">OR</div>
 
-                    <button className="btn btn-outline btn-secondary border-secondary/30 w-full flex justify-center items-center gap-2">
+                    <button
+                        onClick={handleGoogleLogin}
+                        className="btn btn-outline btn-secondary border-secondary/30 w-full flex justify-center items-center gap-2">
                         <img
                             src="https://www.svgrepo.com/show/475656/google-color.svg"
                             alt="Google"

@@ -1,6 +1,86 @@
-import React from "react";
-
+import React, { use, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { useNavigate } from "react-router";
+import { updateProfile } from "firebase/auth";
+import Swal from "sweetalert2";
 const RegisterModal = () => {
+    const { googleLogin, createUser, setUser } = use(AuthContext);
+    const navigate = useNavigate();
+    const [error, setError] = useState("");
+
+    const handleGoogleLogin = async () => {
+        try {
+            await googleLogin();
+            document.getElementById("register_modal").checked = false;
+            navigate("/");
+        } catch (err) {
+            console.error("Google Login failed:", err);
+        }
+    };
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const formData = Object.fromEntries(new FormData(form).entries());
+        const { displayName, email, password, photoURL } = formData;
+
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[a-z]/.test(password);
+
+        if (!displayName || !email || !password || !photoURL) {
+            setError("All fields are required");
+            return;
+        } else if (!hasUppercase || !hasLowercase) {
+            setError(
+                "Password must contain at least one uppercase and lowercase character"
+            );
+            return;
+        } else if (password.length < 6) {
+            setError("Password must have at least 6 characters");
+            return;
+        }
+
+        // Register user (also  updating profile-info in the firebase)
+        createUser(email, password)
+            .then((result) => {
+                const user = result.user;
+                updateProfile(user, {
+                    displayName,
+                    photoURL,
+                })
+                    .then(() => {
+                        setUser({
+                            ...user,
+                            displayName,
+                            photoURL,
+                        });
+                        document.getElementById(
+                            "register_modal"
+                        ).checked = false;
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "User registered succesfully",
+                            showConfirmButton: false,
+                            timer: 1200,
+                        });
+                        navigate("/");
+                    })
+                    .catch((err) => {
+                        setError(err.message);
+                    });
+            })
+            .catch((err) => {
+                if(err.message== "Firebase: Error (auth/invalid-email)."){
+                    setError("Must enter a valid email");
+                }else if(err.message=="Firebase: Error (auth/email-already-in-use)."){
+                    setError("Email already in use")
+                }else{
+                    setError(err.message)
+                }
+            });
+    };
+
     return (
         <div>
             <input
@@ -13,31 +93,40 @@ const RegisterModal = () => {
                     <h3 className="text-2xl font-bold text-primary mb-4">
                         Create an Account
                     </h3>
-                    <form className="space-y-3">
+                    <form className="space-y-3" onSubmit={handleRegister}>
                         <input
                             type="text"
                             placeholder="Full Name"
                             className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full"
                             required
+                            name="displayName"
+                            onChange={() => setError("")}
                         />
                         <input
                             type="email"
                             placeholder="Email"
                             className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full"
                             required
+                            name="email"
+                            onChange={() => setError("")}
                         />
                         <input
                             type="password"
                             placeholder="Password"
                             className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full"
                             required
+                            name="password"
+                            onChange={() => setError("")}
                         />
                         <input
                             type="text"
                             placeholder="PhotoURL"
                             className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full"
                             required
+                            name="photoURL"
+                            onChange={() => setError("")}
                         />
+                        {error && <p className="text-error text-xs">{error}</p>}
                         <button className="btn btn-primary btn-outline border-secondary/30 border-1 w-full mt-2">
                             Sign Up
                         </button>
@@ -45,7 +134,9 @@ const RegisterModal = () => {
 
                     <div className="divider text-neutral">OR</div>
 
-                    <button className="btn btn-outline btn-secondary border-secondary/30 w-full flex justify-center items-center gap-2">
+                    <button
+                        onClick={handleGoogleLogin}
+                        className="btn btn-outline btn-secondary border-secondary/30 w-full flex justify-center items-center gap-2">
                         <img
                             src="https://www.svgrepo.com/show/475656/google-color.svg"
                             alt="Google"

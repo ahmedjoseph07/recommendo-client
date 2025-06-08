@@ -1,16 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import ThemeToggleBtn from "../ThemeToggleBtn";
 import logo from "../../assets/logo.png";
 import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal.jsx/RegisterModal";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 const Navbar = () => {
+
+    const { user,logOut } = use(AuthContext);
+
+    const handleLogout = ()=>{
+        logOut()
+    }
+
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
-        useEffect(() => {
+    useEffect(() => {
         const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target)
+            ) {
                 setIsOpen(false);
             }
         };
@@ -20,7 +31,8 @@ const Navbar = () => {
         };
     }, []);
 
-    const navItemStyle = "hover:text-secondary hover:scale-105 transition-transform duration-100 ease-in-out";
+    const navItemStyle =
+        "hover:text-secondary hover:scale-105 transition-transform duration-100 ease-in-out";
     const navLinks = (
         <>
             <li>
@@ -84,13 +96,26 @@ const Navbar = () => {
                 {/* Navbar End */}
                 <div className="flex items-center gap-4">
                     <ThemeToggleBtn />
-                    <label htmlFor="login_modal" className="btn btn-primary btn-outline normal-case">
-                        Login
-                    </label>
+                    {user ? (
+                        <>
+                        <img className="w-10" src={user.photoURL} alt="" />
+                            <button onClick={handleLogout}
+                                className="btn btn-accent btn-outline text-neutral">
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <label
+                            htmlFor="login_modal"
+                            className="btn btn-primary btn-outline normal-case">
+                            Login
+                        </label>
+                    )}
                 </div>
 
                 {/* Mobile Dropdown with Slide Animation */}
-                <div ref={dropdownRef}
+                <div
+                    ref={dropdownRef}
                     className={`absolute left-4 right-4 top-20 mx-auto w-[90%] border border-secondary text-neutral shadow-lg space-y-4 transform transition-all duration-300 ease-in-out lg:hidden ${
                         isOpen
                             ? "translate-y-8 opacity-100 pointer-events-auto"
@@ -99,8 +124,8 @@ const Navbar = () => {
                     <ul className="text-center bg-secondary">{navLinks}</ul>
                 </div>
             </div>
-        <LoginModal/>
-        <RegisterModal/>
+            <LoginModal />
+            <RegisterModal />
         </div>
     );
 };
