@@ -77,11 +77,11 @@ const MyQueriesPage = () => {
                     {queries.map((q, index) => (
                         <motion.div
                             key={q._id}
-                            className="bg-base-100 border rounded-xl p-5 border-base-300 shadow hover:shadow-2xl duration-400 hover:scale-105 cursor-pointer"
+                            className="bg-base-100 border group rounded-xl p-5 border-base-300 shadow hover:shadow-2xl duration-400 hover:scale-105 cursor-pointer"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}>
-                            <h3 className="text-lg text-primary font-bold mb-1">
+                            <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
                                 {q.title}
                             </h3>
                             <p className="text-sm mb-2">

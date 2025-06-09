@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const queries = [
     {
@@ -41,16 +42,19 @@ const RecentQueries = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {queries.map((query, index) => (
-                    <div
+                    <motion.div
                         key={index}
-                        className="cursor-pointer p-6 rounded-xl shadow-md hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-400 border border-base-300">
-                        <h3 className="text-xl font-semibold mb-2 text-primary">
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="cursor-pointer group p-6 rounded-xl shadow-md hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-400 border border-base-300"
+                        >
+                        <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
                             {query.title}
                         </h3>
                         <p className="text-sm text-neutral">
                             {query.description}
                         </p>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </div>
