@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
                 ),
             },
             {
-                path: "/recommendations-for-me",
+                path: "/recommended-for-me",
                 element: <RecommendationsPage />,
             },
             {

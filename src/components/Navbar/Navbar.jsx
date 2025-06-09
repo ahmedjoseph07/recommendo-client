@@ -72,13 +72,13 @@ const Navbar = () => {
             {
                 user && <>
                 <li> <NavLink
-                    to="/recommendations-for-me"
+                    to="/recommended-for-me"
                     className={({ isActive }) =>
                         isActive
                             ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
                             : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
                     }>
-                    Recommendations For Me
+                    Recommended For Me
                 </NavLink></li>
                 <li> <NavLink
                     to="/my-queries"
