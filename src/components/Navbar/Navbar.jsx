@@ -1,6 +1,6 @@
 import React, { use, useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
-import ThemeToggleBtn from "../ThemeToggleBtn";
+import ThemeToggleBtn from "../Theme/ThemeToggleBtn";
 import logo from "../../assets/logo.png";
 import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
 import LoginModal from "../LoginModal/LoginModal";
