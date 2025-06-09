@@ -11,7 +11,6 @@ const HomePage = () => {
         <div>
             <SlideShow/>
             <Hero/>
-            {/* <Trending/> */}
             <RecentQueries/>
             <Testimonials/>
         </div>

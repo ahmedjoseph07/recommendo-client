@@ -74,7 +74,7 @@ const Queries = () => {
                 {sampleQueries.map((query, index) => (
                     <div
                         key={index}
-                        className="border border-base-300 rounded-xl p-5 shadow-md hover:shadow-xl transition-shadow duration-300 bg-white group cursor-pointer">
+                        className="border border-base-300 rounded-xl p-5 shadow-md hover:shadow-xl transition-shadow duration-300 group cursor-pointer">
                         <div className="flex justify-between items-center mb-2">
                             <span className="text-sm font-medium text-accent">
                                 {query.category}

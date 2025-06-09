@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router";
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub } from "react-icons/fa";
+import logo from "../../assets/logo.png";
 
 const Footer = () => {
     return (
         <footer className="border-t border-secondary shadow-sm mt-10">
             <div className="footer w-10/12 md:w-11/12 mx-auto p-10 text-sm md:text-base flex flex-col md:flex-row md:justify-between gap-10">
                 <div className="md:w-1/4">
+                <img className="w-10" src={logo} alt="" />
                     <Link
                         to="/"
                         className="text-2xl font-bold text-primary mb-2 block">

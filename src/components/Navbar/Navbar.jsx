@@ -87,7 +87,7 @@ const Navbar = () => {
                             ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
                             : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
                     }>
-                    My queries
+                    My Queries
                 </NavLink></li>
                 <li> <NavLink
                     to="/my-recommendations"

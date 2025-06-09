@@ -9,50 +9,68 @@ import PolicyPage from "../pages/PolicyPage";
 import RecommendationsPage from "../pages/RecommendationsPage";
 import MyQueriesPage from "../pages/MyQueriesPage";
 import MyRecommendationsPage from "../pages/MyRecommendationsPage";
+import ErrorPage from "../pages/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
+import AddQueryPage from "../pages/AddQueryPage";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root/>,
+        element: <Root />,
         children: [
             {
-                index:true,
+                index: true,
                 path: "/",
-                element: <HomePage/>
+                element: <HomePage />,
             },
             {
-                path:  "/queries",
-                element: <AllQueriespage/>
+                path: "/queries",
+                element: (
+                    <PrivateRoute>
+                        <AllQueriespage />
+                    </PrivateRoute>
+                ),
             },
             {
                 path: "/recommendations-for-me",
-                element:<RecommendationsPage/>
+                element: <RecommendationsPage />,
             },
             {
-                path:"/my-queries",
-                element:<MyQueriesPage/>
+                path: "/my-queries",
+                element: <MyQueriesPage />,
             },
             {
-                path:"/my-recommendations",
-                element:<MyRecommendationsPage/>
+                path: "/my-recommendations",
+                element: <MyRecommendationsPage />,
             },
             {
                 path: "/about",
-                element : <AboutPage/>
+                element: <AboutPage />,
             },
             {
                 path: "/contact",
-                element: <ContactPage/>
+                element: <ContactPage />,
             },
             {
-                path: '/terms',
-                element: <TermsPage/>
+                path: "/terms",
+                element: <TermsPage />,
             },
             {
                 path: "/policy",
-                element: <PolicyPage/>
-            }
-        ]
+                element: <PolicyPage />,
+            },
+            {
+                path: "/add-query",
+                element: (
+                    <PrivateRoute>
+                        <AddQueryPage />
+                    </PrivateRoute>
+                ),
+            },
+        ],
     },
-    
+    {
+        path: "/*",
+        element: <ErrorPage />,
+    },
 ]);
