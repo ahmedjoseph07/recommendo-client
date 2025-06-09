@@ -18,7 +18,7 @@ const Navbar = () => {
                     icon: "warning",
                     title: "User logged out succesfully",
                     showConfirmButton: false,
-                    timer: 1500,
+                    timer: 1200,
                 });
             })
             .catch((err) => {
@@ -69,6 +69,37 @@ const Navbar = () => {
                     Queries
                 </NavLink>
             </li>
+            {
+                user && <>
+                <li> <NavLink
+                    to="/recommendations-for-me"
+                    className={({ isActive }) =>
+                        isActive
+                            ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
+                            : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
+                    }>
+                    Recommendations For Me
+                </NavLink></li>
+                <li> <NavLink
+                    to="/my-queries"
+                    className={({ isActive }) =>
+                        isActive
+                            ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
+                            : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
+                    }>
+                    My queries
+                </NavLink></li>
+                <li> <NavLink
+                    to="/my-recommendations"
+                    className={({ isActive }) =>
+                        isActive
+                            ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
+                            : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
+                    }>
+                    My Recommendations
+                </NavLink></li>
+                </>
+            }
         </>
     );
 

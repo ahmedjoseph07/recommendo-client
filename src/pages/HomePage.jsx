@@ -1,9 +1,11 @@
 import React from 'react';
+import Slider from '../components/SlideShow/SlideShow';
+import SlideShow from '../components/SlideShow/SlideShow';
 
 const HomePage = () => {
     return (
         <div>
-            Homepage
+            <SlideShow/>
         </div>
     );
 };
