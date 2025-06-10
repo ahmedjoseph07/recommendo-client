@@ -16,7 +16,7 @@ const Hero = () => {
                         recommendations tailored to your needs — all in one
                         place. Simplify your search with Recomendo.
                     </p>
-                    <p className="py-4 font-bold text-accent text-xl">
+                    <div className="py-4 font-bold text-accent text-xl">
                         <Typewriter
                             options={{
                                 strings: [
@@ -30,7 +30,7 @@ const Hero = () => {
                                 deleteSpeed: 30,
                             }}
                         />
-                    </p>
+                    </div>
                     <Link to='/queries' className="btn btn-outline btn-primary px-6 py-2 rounded-lg font-semibold shadow-md hover:shadow-xl transition-all duration-300">
                         Start Exploring
                     </Link>
