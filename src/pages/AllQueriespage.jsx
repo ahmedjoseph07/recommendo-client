@@ -23,7 +23,6 @@ const AllQueriesPage = () => {
     }, []);
 
     const sortedQueries = [...queries].sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))
-    console.log(sortedQueries)
 
     if (loading) {
         return <Loading />;
@@ -47,8 +46,8 @@ const AllQueriesPage = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}>
                         <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-medium text-accent">
-                                Product :- {query.productName}
+                            <span className="text-sm font-medium">
+                                {query.userEmail}
                             </span>
                             <span className="text-xs text-neutral opacity-70">
                                 {new Date(query.createdAt).toLocaleDateString()}
