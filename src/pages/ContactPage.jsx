@@ -24,7 +24,7 @@ const ContactPage = () => {
                     placeholder="Your Message"
                     className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full"
                     required></textarea>
-                <button className="btn btn-primary btn-outline border-secondary/30 w-full">
+                <button className="btn btn-primary btn-outline border-secondary/30">
                     Send Message
                 </button>
             </form>

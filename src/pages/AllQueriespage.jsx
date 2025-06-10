@@ -69,7 +69,7 @@ const AllQueriesPage = () => {
                             <span className="text-lg text-secondary font-medium">
                                 {query.recommendationCount}👍Recommendations
                             </span>
-                            <Link>
+                            <Link to={`/queries/recommend/${query._id}`} >
                                 <button className="btn btn-sm btn-outline btn-primary">
                                 👍Recommend
                                 </button>

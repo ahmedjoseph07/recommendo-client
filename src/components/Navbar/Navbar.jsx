@@ -1,5 +1,5 @@
 import React, { use, useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import ThemeToggleBtn from "../Theme/ThemeToggleBtn";
 import logo from "../../assets/logo.png";
 import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
@@ -9,6 +9,7 @@ import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 const Navbar = () => {
     const { user, logOut } = use(AuthContext);
+    const navigate = useNavigate()
 
     const handleLogout = () => {
         logOut()
@@ -20,6 +21,7 @@ const Navbar = () => {
                     showConfirmButton: false,
                     timer: 1200,
                 });
+                navigate('/')
             })
             .catch((err) => {
                 console.log(err);
@@ -106,9 +108,7 @@ const Navbar = () => {
     return (
         <div className="w-full border-b border-secondary shadow-sm">
             <div className="py-4 w-10/12 md:w-11/12 mx-auto flex justify-between items-center  px-4 relative z-20">
-                {/* Navbar Start */}
                 <div className="flex items-center gap-4">
-                    {/* Mobile Hamburger / Cross Toggle */}
                     <div className="lg:hidden">
                         <button
                             onClick={() => setIsOpen(!isOpen)}
@@ -131,12 +131,10 @@ const Navbar = () => {
                     </Link>
                 </div>
 
-                {/* Navbar Center (Desktop Menu) */}
                 <div className="hidden lg:flex">
-                    <ul className="flex gap-4 px-1 text-xl">{navLinks}</ul>
+                    <ul className="flex gap-4 px-1 text-md">{navLinks}</ul>
                 </div>
 
-                {/* Navbar End */}
                 <div className="flex items-center gap-4">
                     <ThemeToggleBtn />
                     {user ? (
@@ -157,7 +155,6 @@ const Navbar = () => {
                     )}
                 </div>
 
-                {/* Mobile Dropdown with Slide Animation */}
                 <div
                     ref={dropdownRef}
                     className={`absolute left-4 right-4 top-20 mx-auto w-[90%] border border-secondary text-neutral shadow-lg space-y-4 transform transition-all duration-300 ease-in-out lg:hidden ${

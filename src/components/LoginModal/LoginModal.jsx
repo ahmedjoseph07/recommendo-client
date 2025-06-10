@@ -76,7 +76,7 @@ const LoginModal = () => {
                         <input
                             type="password"
                             placeholder="Password"
-                            className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full w-full"
+                            className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full"
                             required
                             name="password"
                             onChange={()=>setError("")}

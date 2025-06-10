@@ -68,9 +68,9 @@ const MyQueriesPage = () => {
                     <p className="text-lg">
                         You haven't added any queries yet.
                     </p>
-                    <button className="btn btn-outline btn-sm btn-primary">
+                    <Link to="/add-query" className="btn btn-outline btn-sm btn-primary">
                         Add Your First Query
-                    </button>
+                    </Link>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -94,12 +94,12 @@ const MyQueriesPage = () => {
                                 </span>
                             </p>
                             <div className="flex flex-wrap gap-2">
-                                <button className="btn btn-sm btn-secondary btn-outline">
+                                <Link to={`/my-queries/${q._id}`} className="btn btn-sm btn-secondary btn-outline">
                                     View Details
-                                </button>
-                                <button className="btn btn-sm btn-outline btn-accent">
+                                </Link>
+                                <Link to={`/update/${q._id}`} className="btn btn-sm btn-outline btn-accent">
                                     Update
-                                </button>
+                                </Link>
                                 <button className="btn btn-sm btn-outline btn-error">
                                     Delete
                                 </button>

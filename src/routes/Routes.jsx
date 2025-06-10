@@ -6,17 +6,21 @@ import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
 import TermsPage from "../pages/TermsPage";
 import PolicyPage from "../pages/PolicyPage";
-import RecommendationsPage from "../pages/RecommendationsPage";
+import RecommendationsPage from "../pages/RecommendedPage";
 import MyQueriesPage from "../pages/MyQueriesPage";
 import MyRecommendationsPage from "../pages/MyRecommendationsPage";
 import ErrorPage from "../pages/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import AddQueryPage from "../pages/AddQueryPage";
+import QueryDetailsPage from "../pages/QueryDetailsPage";
+import MyQueryDetailsPage from "../pages/MyQueryDetailsPage";
+import UpdateDetailspage from "../pages/UpdateDetailspage";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Root />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
@@ -25,11 +29,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/queries",
-                element: (
-                    <PrivateRoute>
-                        <AllQueriespage />
-                    </PrivateRoute>
-                ),
+                element: <AllQueriespage />,
             },
             {
                 path: "/recommended-for-me",
@@ -66,6 +66,18 @@ export const router = createBrowserRouter([
                         <AddQueryPage />
                     </PrivateRoute>
                 ),
+            },
+            {
+                path: "/queries/recommend/:id",
+                element: <QueryDetailsPage />,
+            },
+            {
+                path: "/my-queries/:id",
+                element: <MyQueryDetailsPage />,
+            },
+            {
+                path: "/update/:id",
+                element: <UpdateDetailspage />,
             },
         ],
     },

@@ -1,6 +1,6 @@
 import React from "react";
 
-const MyRecommendationsPage = () => {
+const RecommendedPage = () => {
     const queries = [
         {
             id: "q1",
@@ -30,11 +30,10 @@ const MyRecommendationsPage = () => {
     ];
 
     const getQueryById = (id) => queries.find((q) => q.id === id);
-
     return (
         <div className="w-11/12 md:w-10/12 mx-auto px-6 py-10 ">
             <h2 className="text-2xl font-semibold mb-6">
-                My Recommendations
+                Recommended For Me
             </h2>
 
             <div className="overflow-x-auto">
@@ -44,7 +43,7 @@ const MyRecommendationsPage = () => {
                             <th className="py-3 px-4 text-neutral">#</th>
                             <th className="py-3 px-4 text-neutral">Query</th>
                             <th className="py-3 px-4 text-neutral">Date</th>
-                            <th className="py-3 px-4 text-neutral">Action</th>
+                            <th className="py-3 px-4 text-neutral"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,20 +53,11 @@ const MyRecommendationsPage = () => {
                                 <tr
                                     key={rec.id}
                                     className="border border-base-300 text-neutral">
-                                    <td className="py-3 px-4">
-                                        {index + 1}
-                                    </td>
+                                    <td className="py-3 px-4">{index + 1}</td>
                                     <td className="py-3 px-4">
                                         {query?.title}
                                     </td>
-                                    <td className="py-3 px-4">
-                                        {rec.date}
-                                    </td>
-                                    <td className="py-3 px-4">
-                                        <button className="btn btn-error btn-outline btn-sm">
-                                            Delete
-                                        </button>
-                                    </td>
+                                    <td className="py-3 px-4">{rec.date}</td>
                                 </tr>
                             );
                         })}
@@ -87,4 +77,4 @@ const MyRecommendationsPage = () => {
     );
 };
 
-export default MyRecommendationsPage;
+export default RecommendedPage;
