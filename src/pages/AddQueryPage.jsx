@@ -8,7 +8,6 @@ const AddQueryPage = () => {
 
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
-    console.log(user);
 
     const handleAddQuery = async (e) => {
         e.preventDefault();
@@ -23,7 +22,7 @@ const AddQueryPage = () => {
         };
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_SERVER_URL}/api/queries`,
+                `${import.meta.env.VITE_SERVER_URL}/api/add-query`,
                 { queryData }
             );
             if (response.status === 201) {
