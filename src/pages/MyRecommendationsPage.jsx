@@ -1,70 +1,116 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext/AuthContext";
+import Loading from "../components/Loading/Loading";
+import Swal from "sweetalert2";
 
 const MyRecommendationsPage = () => {
-    const queries = [
-        {
-            id: "q1",
-            title: "How to deploy MERN stack?",
-            recommendationCount: 3,
-        },
-        {
-            id: "q2",
-            title: "Best practices for Redux Toolkit?",
-            recommendationCount: 2,
-        },
-    ];
+    const [recommendations, setRecommendations] = useState([]);
+    const { user, loading, setLoading } = useContext(AuthContext);
 
-    const recommendations = [
-        {
-            id: "r1",
-            queryId: "q1",
-            note: "Essential for production",
-            date: "2025-06-01",
-        },
-        {
-            id: "r2",
-            queryId: "q2",
-            note: "Helps manage state",
-            date: "2025-06-02",
-        },
-    ];
+    useEffect(() => {
+        if (user) {
+            axios(
+                `${import.meta.env.VITE_SERVER_URL}/api/my-recommendations/${
+                    user.email
+                }`
+            )
+                .then((res) => {
+                    setRecommendations(res.data);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    setLoading(false);
+                });
+        }
+    }, [user, setLoading]);
 
-    const getQueryById = (id) => queries.find((q) => q.id === id);
+    const handleDeleteRecommendation = (id,queryId) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            customClass: {
+                confirmButton: "btn btn-accent btn-outline btn-md mr-4",
+                cancelButton: "btn btn-error btn-outline btn-md",
+            },
+
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(`${import.meta.env.VITE_SERVER_URL}/api/delete-rec/${id}/${queryId}`,{
+                        data:{queryId}
+                    })
+                    .then((res) => {
+                        if (res.data) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your group has been deleted.",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer:1500,
+                            });
+                        }
+
+                        setRecommendations((prev) => {
+                            return prev.filter((rec) => rec._id !== id);
+                        });
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Something went wrong while deleting.",
+                            icon: "error",
+                            showConfirmButton: false,
+                        });
+                    });
+            }
+        });
+    };
+
+    if (loading) return <Loading />;
 
     return (
         <div className="w-11/12 md:w-10/12 mx-auto px-6 py-10 ">
-            <h2 className="text-2xl font-semibold mb-6">
-                My Recommendations
-            </h2>
+            <h2 className="text-2xl font-semibold mb-6">My Recommendations</h2>
 
             <div className="overflow-x-auto">
                 <table className="table w-full shadow-xl rounded-lg">
                     <thead className="border border-base-300">
                         <tr>
                             <th className="py-3 px-4 text-neutral">#</th>
-                            <th className="py-3 px-4 text-neutral">Query</th>
+                            <th className="py-3 px-4 text-neutral">Title</th>
                             <th className="py-3 px-4 text-neutral">Date</th>
                             <th className="py-3 px-4 text-neutral">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {recommendations.map((rec, index) => {
-                            const query = getQueryById(rec.queryId);
                             return (
                                 <tr
-                                    key={rec.id}
+                                    key={rec._id}
                                     className="border border-base-300 text-neutral">
+                                    <td className="py-3 px-4">{index + 1}</td>
                                     <td className="py-3 px-4">
-                                        {index + 1}
+                                        {rec.recommendationTitle}
                                     </td>
                                     <td className="py-3 px-4">
-                                        {query?.title}
+                                        {new Date(
+                                            rec.createdAt
+                                        ).toLocaleDateString()}
                                     </td>
                                     <td className="py-3 px-4">
-                                        {rec.date}
-                                    </td>
-                                    <td className="py-3 px-4">
-                                        <button className="btn btn-error btn-outline btn-sm">
+                                        <button
+                                            onClick={() =>
+                                                handleDeleteRecommendation(rec._id,rec.queryId)
+                                            }
+                                            className="btn btn-error btn-outline btn-sm">
                                             Delete
                                         </button>
                                     </td>

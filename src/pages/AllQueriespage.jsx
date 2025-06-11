@@ -38,15 +38,20 @@ const AllQueriesPage = () => {
                 All Queries
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sortedQueries.length === 0 ? (
-                    <div className="col-span-full flex justify-center items-center min-h-[200px]">
-                        <p className="text-center text-lg text-neutral-500">
-                            No Queries Found
-                        </p>
-                    </div>
-                ) : (
-                    sortedQueries.map((query, index) => (
+            {sortedQueries.length === 0 ? (
+                <div className="flex flex-col items-center justify-center bg-base-200 p-8 rounded-xl shadow-md text-center min-h-[300px]">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                        No Queries Found
+                    </h2>
+                    <Link
+                        to="/add-query"
+                        className="btn btn-primary btn-outline btn-sm">
+                        Add New Query
+                    </Link>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {sortedQueries.map((query, index) => (
                         <motion.div
                             key={query._id}
                             className="border border-base-300 rounded-xl p-5 shadow-md hover:shadow-2xl hover:scale-105 duration-400 transition-all group cursor-pointer bg-base-100"
@@ -74,14 +79,14 @@ const AllQueriesPage = () => {
                                 </span>
                                 <Link to={`/queries/recommend/${query._id}`}>
                                     <button className="btn btn-sm btn-outline btn-primary">
-                                        👍Recommend
+                                        👍 Recommend
                                     </button>
                                 </Link>
                             </div>
                         </motion.div>
-                    ))
-                )}
-            </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
