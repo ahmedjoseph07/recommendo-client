@@ -8,27 +8,6 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import Loading from "../components/Loading/Loading";
 
-const dummyRecommendations = [
-    {
-        title: "Try Pepsi",
-        productName: "Pepsi",
-        image: "https://via.placeholder.com/100",
-        reason: "Tastes similar but supports a different brand.",
-        recommenderEmail: "john@example.com",
-        recommenderName: "John Doe",
-        date: "2025-06-10",
-    },
-    {
-        title: "RC Cola is underrated",
-        productName: "RC Cola",
-        image: "https://via.placeholder.com/100",
-        reason: "Cheaper and available everywhere.",
-        recommenderEmail: "lisa@example.com",
-        recommenderName: "Lisa Ray",
-        date: "2025-06-09",
-    },
-];
-
 const QueryDetailsPage = () => {
     const [recommendations, setRecommendations] = useState([]);
     const [query, setQuery] = useState({});
@@ -194,7 +173,7 @@ const QueryDetailsPage = () => {
                             key={index}
                             className="flex gap-4 border p-4 rounded-xl items-start bg-base-100">
                             <img
-                                src={rec.recommendationImageUR}
+                                src={rec.recommendationImageURL}
                                 alt={rec.recommendationTitle}
                                 className="w-20 h-20 object-cover rounded-lg"
                             />
