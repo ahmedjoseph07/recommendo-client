@@ -37,27 +37,39 @@ const RecentQueries = () => {
                 Recent Queries
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sortedQueries.map((query, index) => (
-                    <motion.div
-                        key={index}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="cursor-pointer group p-6 rounded-xl shadow-md hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-400 border border-base-300">
-                        <div className="flex justify-between items-center">
-                            <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
-                                {query.queryTitle}
-                            </h3>
-                            <p className="text-sm text-neutral">{new Date(query.createdAt).toLocaleDateString()}</p>
-                        </div>
-                        
-                        <p className="text-sm text-neutral">
-                            Product : {query.productName}
+                {sortedQueries.length === 0 ? (
+                    <div className="col-span-full flex justify-center items-center min-h-[200px]">
+                        <p className="text-center text-lg text-neutral-500">
+                            No Recent Queries Found
                         </p>
-                        <p className="text-sm text-neutral">
-                            Brand : {query.productBrand}
-                        </p>
-                    </motion.div>
-                ))}
+                    </div>
+                ) : (
+                    sortedQueries.map((query, index) => (
+                        <motion.div
+                            key={index}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="cursor-pointer group p-6 rounded-xl shadow-md hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-400 border border-base-300">
+                            <div className="flex justify-between items-center">
+                                <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
+                                    {query.queryTitle}
+                                </h3>
+                                <p className="text-sm text-neutral">
+                                    {new Date(
+                                        query.createdAt
+                                    ).toLocaleDateString()}
+                                </p>
+                            </div>
+
+                            <p className="text-sm text-neutral">
+                                Product : {query.productName}
+                            </p>
+                            <p className="text-sm text-neutral">
+                                Brand : {query.productBrand}
+                            </p>
+                        </motion.div>
+                    ))
+                )}
             </div>
         </div>
     );

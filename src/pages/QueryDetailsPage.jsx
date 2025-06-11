@@ -5,14 +5,8 @@ import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
-
-const dummyQuery = {
-    id: "query123",
-    queryTitle: "Is there a better alternative with similar quality?",
-    productName: "Coca Cola",
-    userEmail: "creator@example.com",
-    userName: "Query Creator",
-};
+import { useEffect } from "react";
+import Loading from "../components/Loading/Loading";
 
 const dummyRecommendations = [
     {
@@ -37,17 +31,47 @@ const dummyRecommendations = [
 
 const QueryDetailsPage = () => {
     const [recommendations, setRecommendations] = useState([]);
+    const [query, setQuery] = useState({});
+    const [loading, setLoading] = useState(true);
+    const { id } = useParams();
+
+    useEffect(() => {
+        axios(`${import.meta.env.VITE_SERVER_URL}/api/query/${id}`)
+            .then((res) => {
+                setQuery(res.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error(err);
+                setLoading(false);
+            });
+    }, [id]);
+
+    useEffect(() => {
+        axios(`${import.meta.env.VITE_SERVER_URL}/api/recommendations/${id}`)
+            .then((res) => {
+                setRecommendations(res.data);
+                setLoading(false);
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.error(err);
+                setLoading(false);
+            });
+    }, [id]);
+
     const navigate = useNavigate();
 
     const { user } = useContext(AuthContext);
-    const { id } = useParams();
+
     const handleAddRecommendation = (e) => {
         e.preventDefault();
         const formData = Object.fromEntries(new FormData(e.target).entries());
         const recommendationData = {
             ...formData,
             queryId: id,
-            userEmail: user.email,
+            recommenderEmail: user.email,
+            recommenderName: user.displayName,
             createdAt: new Date(),
         };
 
@@ -73,26 +97,28 @@ const QueryDetailsPage = () => {
             });
     };
 
+    if (loading) return <Loading />;
+
     return (
         <div className="w-11/12 md:w-8/12 mx-auto px-6 py-10 space-y-10">
             <div className="bg-base-200 p-6 rounded-2xl shadow-xl">
                 <h3 className="text-2xl font-bold mb-4">User Information</h3>
                 <p>
                     <span className="font-semibold">Name:</span>{" "}
-                    {dummyQuery.userName}
+                    {query.userName}
                 </p>
                 <p>
                     <span className="font-semibold">Email:</span>{" "}
-                    {dummyQuery.userEmail}
+                    {query.userEmail}
                 </p>
 
                 <p>
                     <span className="font-semibold">Product:</span>{" "}
-                    {dummyQuery.productName}
+                    {query.productName}
                 </p>
                 <p>
                     <span className="font-semibold">Query Title:</span>{" "}
-                    {dummyQuery.queryTitle}
+                    {query.queryTitle}
                 </p>
             </div>
 
@@ -110,6 +136,7 @@ const QueryDetailsPage = () => {
                             placeholder="e.g. Try Pepsi"
                             className="border border-secondary p-4 rounded-xl w-full transition-all duration-300 focus:outline-none"
                             name="recommendationTitle"
+                            required
                         />
                     </div>
 
@@ -122,6 +149,7 @@ const QueryDetailsPage = () => {
                             placeholder="e.g. Pepsi"
                             className="border border-secondary p-4 rounded-xl w-full transition-all duration-300 focus:outline-none"
                             name="recommendedProductName"
+                            required
                         />
                     </div>
 
@@ -134,6 +162,7 @@ const QueryDetailsPage = () => {
                             placeholder="https://example.com/image.jpg"
                             className="border border-secondary p-4 rounded-xl w-full transition-all duration-300 focus:outline-none"
                             name="recommendationImageURL"
+                            required
                         />
                     </div>
 
@@ -159,29 +188,30 @@ const QueryDetailsPage = () => {
             <div className="bg-base-200 p-6 rounded-2xl shadow-xl">
                 <h3 className="text-2xl font-bold mb-6">All Recommendations</h3>
                 <div className="space-y-4">
-                    {dummyRecommendations.map((rec, index) => (
+
+                    {recommendations.length===0 ? <p>No recommendations given yet</p> : recommendations.map((rec, index) => (
                         <div
                             key={index}
                             className="flex gap-4 border p-4 rounded-xl items-start bg-base-100">
                             <img
-                                src={rec.image}
-                                alt={rec.productName}
+                                src={rec.recommendationImageUR}
+                                alt={rec.recommendationTitle}
                                 className="w-20 h-20 object-cover rounded-lg"
                             />
                             <div className="flex-1">
                                 <h4 className="font-bold text-lg">
-                                    {rec.title}
+                                    {rec.recommendationTitle}
                                 </h4>
                                 <p className="text-sm ">
                                     <span className="font-semibold">
                                         Product:
                                     </span>{" "}
-                                    {rec.productName}
+                                    {rec.recommendedProductName}
                                 </p>
                                 <p className="mt-2">{rec.reason}</p>
                                 <p className="mt-2 text-sm">
                                     Recommended by {rec.recommenderName} (
-                                    {rec.recommenderEmail}) on {rec.date}
+                                    {rec.recommenderEmail}) on {new Date(rec.createdAt).toLocaleDateString()}
                                 </p>
                             </div>
                         </div>

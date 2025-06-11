@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 import Loading from "../components/Loading/Loading";
 import Swal from "sweetalert2";
+
 const UpdateDetailspage = () => {
     const { id } = useParams();
     const [query, setQuery] = useState({});

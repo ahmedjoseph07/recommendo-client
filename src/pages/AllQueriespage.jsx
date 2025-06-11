@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import axios from "axios";
 import Loading from "../components/Loading/Loading";
 
-
 const AllQueriesPage = () => {
     const [queries, setQueries] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -22,13 +21,15 @@ const AllQueriesPage = () => {
             });
     }, []);
 
-    const sortedQueries = [...queries].sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt))
+    const sortedQueries = [...queries].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
 
     if (loading) {
         return <Loading />;
     }
-    if(error){
-        return <p className="text-center text-red-500">{error}</p>
+    if (error) {
+        return <p className="text-center text-red-500">{error}</p>;
     }
 
     return (
@@ -38,38 +39,48 @@ const AllQueriesPage = () => {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sortedQueries.map((query, index) => (
-                    <motion.div
-                        key={query._id}
-                        className="border border-base-300 rounded-xl p-5 shadow-md hover:shadow-2xl hover:scale-105 duration-400 transition-all group cursor-pointer bg-base-100"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}>
-                        <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-medium">
-                                {query.userEmail}
-                            </span>
-                            <span className="text-xs text-neutral opacity-70">
-                                {new Date(query.createdAt).toLocaleDateString()}
-                            </span>
-                        </div>
+                {sortedQueries.length === 0 ? (
+                    <div className="col-span-full flex justify-center items-center min-h-[200px]">
+                        <p className="text-center text-lg text-neutral-500">
+                            No Queries Found
+                        </p>
+                    </div>
+                ) : (
+                    sortedQueries.map((query, index) => (
+                        <motion.div
+                            key={query._id}
+                            className="border border-base-300 rounded-xl p-5 shadow-md hover:shadow-2xl hover:scale-105 duration-400 transition-all group cursor-pointer bg-base-100"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}>
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm font-medium">
+                                    {query.userEmail}
+                                </span>
+                                <span className="text-xs text-neutral opacity-70">
+                                    {new Date(
+                                        query.createdAt
+                                    ).toLocaleDateString()}
+                                </span>
+                            </div>
 
-                        <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
-                            {query.queryTitle}
-                        </h3>
+                            <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
+                                {query.queryTitle}
+                            </h3>
 
-                        <div className="flex justify-between items-center">
-                            <span className="text-lg text-secondary font-medium">
-                                {query.recommendationCount} Recommendations
-                            </span>
-                            <Link to={`/queries/recommend/${query._id}`}>
-                                <button className="btn btn-sm btn-outline btn-primary">
-                                    👍Recommend
-                                </button>
-                            </Link>
-                        </div>
-                    </motion.div>
-                ))}
+                            <div className="flex justify-between items-center">
+                                <span className="text-lg text-secondary font-medium">
+                                    {query.recommendationCount} Recommendations
+                                </span>
+                                <Link to={`/queries/recommend/${query._id}`}>
+                                    <button className="btn btn-sm btn-outline btn-primary">
+                                        👍Recommend
+                                    </button>
+                                </Link>
+                            </div>
+                        </motion.div>
+                    ))
+                )}
             </div>
         </div>
     );
