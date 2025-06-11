@@ -1,4 +1,10 @@
 import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext/AuthContext";
+import { useNavigate, useParams } from "react-router";
+import axios from "axios";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 const dummyQuery = {
     id: "query123",
@@ -30,9 +36,45 @@ const dummyRecommendations = [
 ];
 
 const QueryDetailsPage = () => {
+    const [recommendations, setRecommendations] = useState([]);
+    const navigate = useNavigate();
+
+    const { user } = useContext(AuthContext);
+    const { id } = useParams();
+    const handleAddRecommendation = (e) => {
+        e.preventDefault();
+        const formData = Object.fromEntries(new FormData(e.target).entries());
+        const recommendationData = {
+            ...formData,
+            queryId: id,
+            userEmail: user.email,
+            createdAt: new Date(),
+        };
+
+        axios
+            .post(`${import.meta.env.VITE_SERVER_URL}/api/add-recommendation`, {
+                recommendationData,
+            })
+            .then((res) => {
+                if (res.status === 201) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Recommendation Added Successfully",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    navigate("/queries");
+                    e.target.reset();
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
     return (
         <div className="w-11/12 md:w-8/12 mx-auto px-6 py-10 space-y-10">
-
             <div className="bg-base-200 p-6 rounded-2xl shadow-xl">
                 <h3 className="text-2xl font-bold mb-4">User Information</h3>
                 <p>
@@ -43,6 +85,7 @@ const QueryDetailsPage = () => {
                     <span className="font-semibold">Email:</span>{" "}
                     {dummyQuery.userEmail}
                 </p>
+
                 <p>
                     <span className="font-semibold">Product:</span>{" "}
                     {dummyQuery.productName}
@@ -53,12 +96,11 @@ const QueryDetailsPage = () => {
                 </p>
             </div>
 
-
             <div className="bg-base-200 p-6 rounded-2xl shadow-xl">
                 <h3 className="text-2xl font-bold mb-6">
                     Add a Recommendation
                 </h3>
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleAddRecommendation}>
                     <div>
                         <label className="font-semibold">
                             Recommendation Title
@@ -67,6 +109,7 @@ const QueryDetailsPage = () => {
                             type="text"
                             placeholder="e.g. Try Pepsi"
                             className="border border-secondary p-4 rounded-xl w-full transition-all duration-300 focus:outline-none"
+                            name="recommendationTitle"
                         />
                     </div>
 
@@ -78,6 +121,7 @@ const QueryDetailsPage = () => {
                             type="text"
                             placeholder="e.g. Pepsi"
                             className="border border-secondary p-4 rounded-xl w-full transition-all duration-300 focus:outline-none"
+                            name="recommendedProductName"
                         />
                     </div>
 
@@ -86,9 +130,10 @@ const QueryDetailsPage = () => {
                             Recommended Product Image URL
                         </label>
                         <input
-                            type="url"
+                            type="text"
                             placeholder="https://example.com/image.jpg"
                             className="border border-secondary p-4 rounded-xl w-full transition-all duration-300 focus:outline-none"
+                            name="recommendationImageURL"
                         />
                     </div>
 
@@ -99,17 +144,17 @@ const QueryDetailsPage = () => {
                         <textarea
                             rows={4}
                             placeholder="Explain your recommendation"
-                            className="border border-secondary p-4 rounded-xl w-full transition-all duration-300 focus:outline-none"></textarea>
+                            className="border border-secondary p-4 rounded-xl w-full transition-all duration-300 focus:outline-none"
+                            name="recommendationReason"></textarea>
                     </div>
 
                     <button
-                        type="button"
+                        type="submit"
                         className="btn btn-primary btn-outline btn-md">
                         Add Recommendation
                     </button>
                 </form>
             </div>
-
 
             <div className="bg-base-200 p-6 rounded-2xl shadow-xl">
                 <h3 className="text-2xl font-bold mb-6">All Recommendations</h3>
