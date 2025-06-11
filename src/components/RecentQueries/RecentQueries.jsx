@@ -3,39 +3,6 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import Loading from "../Loading/Loading";
 
-const queries = [
-    {
-        title: "Best laptops under 70,000 BDT",
-        description:
-            "Find out which laptops offer the best value for your budget with updated specs and performance reviews.",
-    },
-    {
-        title: "Top Restaurants in Dhaka",
-        description:
-            "Curated list of the best places to eat, rated by the local food community.",
-    },
-    {
-        title: "Affordable smartphones 2025",
-        description:
-            "Latest phones offering powerful features at a budget-friendly price.",
-    },
-    {
-        title: "Reliable courier services in Bangladesh",
-        description:
-            "Compare services based on delivery speed, coverage, and pricing.",
-    },
-    {
-        title: "How to prepare for BCS exam",
-        description:
-            "Resources and timelines for beginners aiming to clear the BCS exam.",
-    },
-    {
-        title: "Best banks for student accounts",
-        description:
-            "Explore student-friendly bank accounts with minimal fees and good support.",
-    },
-];
-
 const RecentQueries = () => {
     const [queries, setQueries] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -82,7 +49,7 @@ const RecentQueries = () => {
                             </h3>
                             <p className="text-sm text-neutral">{new Date(query.createdAt).toLocaleDateString()}</p>
                         </div>
-
+                        
                         <p className="text-sm text-neutral">
                             Product : {query.productName}
                         </p>

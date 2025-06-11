@@ -6,7 +6,7 @@ import Testimonials from '../components/Testimonials/Testimonials';
 import Hero from '../components/Hero/Hero';
 
 const HomePage = () => {
-
+    
     return (
         <div>
             <SlideShow/>
