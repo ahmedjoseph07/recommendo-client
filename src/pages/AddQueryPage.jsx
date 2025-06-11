@@ -33,7 +33,7 @@ const AddQueryPage = () => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                navigate("/queries")
+                navigate("/my-queries")
                 e.target.reset();
             }
         } catch (err) {

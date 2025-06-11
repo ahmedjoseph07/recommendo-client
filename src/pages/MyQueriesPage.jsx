@@ -6,9 +6,10 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
 import { useState } from "react";
 import Loading from "../components/Loading/Loading";
+import Swal from "sweetalert2";
 
 const MyQueriesPage = () => {
-    const { user,loading,setLoading } = useContext(AuthContext);
+    const { user, loading, setLoading } = useContext(AuthContext);
     const [myQueries, setMyQueries] = useState([]);
 
     useEffect(() => {
@@ -19,7 +20,6 @@ const MyQueriesPage = () => {
                 }`
             )
                 .then((res) => {
-                    console.log(res.data);
                     setMyQueries(res.data);
                     setLoading(false);
                 })
@@ -28,7 +28,53 @@ const MyQueriesPage = () => {
                     setLoading(false);
                 });
         }
-    }, [user]);
+    }, [user, setLoading]);
+
+    const handleDeleteQuery = (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel",
+            customClass: {
+                confirmButton: "btn btn-accent btn-outline btn-md mr-4",
+                cancelButton: "btn btn-error btn-outline btn-md",
+            },
+
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(
+                        `${import.meta.env.VITE_SERVER_URL}/api/delete/${id}`
+                    )
+                    .then((res) => {
+                        if (res.data)
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your group has been deleted.",
+                                icon: "success",
+                                showConfirmButton: false,
+                            });
+
+                        setMyQueries((prev) => {
+                            return prev.filter((query) => query._id !== id);
+                        });
+                    })
+                    .catch((err) => {
+                        console.err(err);
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Something went wrong while deleting.",
+                            icon: "error",
+                            showConfirmButton: false,
+                        });
+                    });
+            }
+        });
+    };
 
     if (loading) {
         return <Loading />;
@@ -66,35 +112,39 @@ const MyQueriesPage = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {myQueries.map((q, index) => (
+                    {myQueries.map((query, index) => (
                         <motion.div
-                            key={q._id}
+                            key={query._id}
                             className="bg-base-100 border group rounded-xl p-5 border-base-300 shadow hover:shadow-2xl duration-400 hover:scale-105 cursor-pointer"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}>
                             <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
-                                {q.queryTitle}
+                                {query.queryTitle}
                             </h3>
-                            <p className="text-sm mb-2">{q.productBrand}</p>
+                            <p className="text-sm mb-2">{query.productBrand}</p>
                             <p className="text-xs mb-4">
                                 posted at:{" "}
                                 <span className="font-semibold">
-                                    {new Date(q.createdAt).toLocaleDateString()}
+                                    {new Date(
+                                        query.createdAt
+                                    ).toLocaleDateString()}
                                 </span>
                             </p>
                             <div className="flex flex-wrap gap-2">
                                 <Link
-                                    to={`/my-queries/${q._id}`}
+                                    to={`/my-queries/${query._id}`}
                                     className="btn btn-sm btn-secondary btn-outline">
                                     View Details
                                 </Link>
                                 <Link
-                                    to={`/update/${q._id}`}
+                                    to={`/update/${query._id}`}
                                     className="btn btn-sm btn-outline btn-accent">
                                     Update
                                 </Link>
-                                <button className="btn btn-sm btn-outline btn-error">
+                                <button
+                                    onClick={() => handleDeleteQuery(query._id)}
+                                    className="btn btn-sm btn-outline btn-error">
                                     Delete
                                 </button>
                             </div>
