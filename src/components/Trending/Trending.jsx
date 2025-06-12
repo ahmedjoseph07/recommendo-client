@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const trendingBrands = ["Samsung", "Apple", "Dell", "Sony", "Realme", "Xiaomi"];
+const trendingBrands = ["Samsung", "Pepsi", "Dell", "Apple", "Rolex", "Gucci","Toyota"];
 
 const Trending = () => {
     return (

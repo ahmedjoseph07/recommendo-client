@@ -1,13 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import axios from "axios";
 import Loading from "../components/Loading/Loading";
+import { AuthContext } from "../contexts/AuthContext/AuthContext";
+import Swal from "sweetalert2";
 
 const AllQueriesPage = () => {
     const [queries, setQueries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleRecommend = async (queryId) => {
+        if (!user) {
+            Swal.fire({
+                icon: "warning",
+                title: "Login Required",
+                text: "Please login to recommend this query.",
+                timer: 1500,
+                showConfirmButton: false,
+            });
+            return;
+        } else {
+            navigate(`/queries/recommend/${queryId}`);
+        }
+    };
 
     useEffect(() => {
         axios(`${import.meta.env.VITE_SERVER_URL}/api/queries`)
@@ -34,13 +53,13 @@ const AllQueriesPage = () => {
 
     return (
         <div className="w-11/12 md:w-10/12 mx-auto my-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-start mb-8">
                 All Queries
             </h2>
 
             {sortedQueries.length === 0 ? (
                 <div className="flex flex-col items-center justify-center bg-base-200 p-8 rounded-xl shadow-md text-center min-h-[300px]">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                    <h2 className="text-xl md:text-2xl font-bold mb-4">
                         No Queries Found
                     </h2>
                     <Link
@@ -77,11 +96,13 @@ const AllQueriesPage = () => {
                                 <span className="text-lg text-secondary font-medium">
                                     {query.recommendationCount} Recommendations
                                 </span>
-                                <Link to={`/queries/recommend/${query._id}`}>
-                                    <button className="btn btn-sm btn-outline btn-primary">
-                                        👍 Recommend
-                                    </button>
-                                </Link>
+                                {/* <Link to={`/queries/recommend/${query._id}`}> */}
+                                <button
+                                    onClick={() => handleRecommend(query._id)}
+                                    className="btn btn-sm btn-outline btn-primary">
+                                    👍 Recommend
+                                </button>
+                                {/* </Link> */}
                             </div>
                         </motion.div>
                     ))}

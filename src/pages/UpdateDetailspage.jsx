@@ -76,7 +76,7 @@ const UpdateDetailspage = () => {
     }
 
     return (
-        <div className="w-11/12 md:w-10/12 mx-auto my-10">
+        <div className="w-11/12 md:w-8/12 mx-auto my-10">
             <div className="bg-base-200 p-6 rounded-2xl shadow-xl">
                 <h3 className="text-2xl font-bold mb-6">Update Your Query</h3>
                 <form className="space-y-6" onSubmit={handleUpdate}>

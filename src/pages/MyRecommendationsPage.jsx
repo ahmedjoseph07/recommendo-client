@@ -9,7 +9,7 @@ const MyRecommendationsPage = () => {
     const { user, loading, setLoading } = useContext(AuthContext);
 
     useEffect(() => {
-        if (user) {
+        if (user && user.email) {
             axios(
                 `${import.meta.env.VITE_SERVER_URL}/api/my-recommendations/${
                     user.email
@@ -26,7 +26,7 @@ const MyRecommendationsPage = () => {
         }
     }, [user, setLoading]);
 
-    const handleDeleteRecommendation = (id,queryId) => {
+    const handleDeleteRecommendation = (id, queryId) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -38,28 +38,30 @@ const MyRecommendationsPage = () => {
                 confirmButton: "btn btn-accent btn-outline btn-md mr-4",
                 cancelButton: "btn btn-error btn-outline btn-md",
             },
-
             buttonsStyling: false,
         }).then((result) => {
             if (result.isConfirmed) {
                 axios
-                    .delete(`${import.meta.env.VITE_SERVER_URL}/api/delete-rec/${id}/${queryId}`,{
-                        data:{queryId}
-                    })
+                    .delete(
+                        `${
+                            import.meta.env.VITE_SERVER_URL
+                        }/api/delete-rec/${id}/${queryId}`,
+                        { data: { queryId } }
+                    )
                     .then((res) => {
                         if (res.data) {
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "Your group has been deleted.",
+                                text: "Your recommendation has been deleted.",
                                 icon: "success",
                                 showConfirmButton: false,
-                                timer:1500,
+                                timer: 1500,
                             });
-                        }
 
-                        setRecommendations((prev) => {
-                            return prev.filter((rec) => rec._id !== id);
-                        });
+                            setRecommendations((prev) =>
+                                prev.filter((rec) => rec._id !== id)
+                            );
+                        }
                     })
                     .catch((err) => {
                         console.error(err);
@@ -77,58 +79,79 @@ const MyRecommendationsPage = () => {
     if (loading) return <Loading />;
 
     return (
-        <div className="w-11/12 md:w-10/12 mx-auto px-6 py-10 ">
-            <h2 className="text-2xl font-semibold mb-6">My Recommendations</h2>
+        <div className="w-11/12 md:w-10/12 mx-auto py-10">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">
+                My Recommendations
+            </h2>
 
-            <div className="overflow-x-auto">
-                <table className="table w-full shadow-xl rounded-lg">
-                    <thead className="border border-base-300">
-                        <tr>
-                            <th className="py-3 px-4 text-neutral">#</th>
-                            <th className="py-3 px-4 text-neutral">Title</th>
-                            <th className="py-3 px-4 text-neutral">Date</th>
-                            <th className="py-3 px-4 text-neutral">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {recommendations.map((rec, index) => {
-                            return (
+            {recommendations.length === 0 ? (
+                <p className="text-neutral text-center text-lg py-10">
+                    You haven’t made any recommendations yet.
+                </p>
+            ) : (
+                <div className="overflow-x-auto">
+                    <table className="table table-zebra w-full text-sm border border-base-300 shadow-md rounded-lg">
+                        <thead className="bg-base-200">
+                            <tr>
+                                <th className="px-4 py-3 text-left">
+                                    #
+                                </th>
+                                <th className="px-4 py-3 text-left">
+                                    Recommendation Title
+                                </th>
+                                <th className="px-4 py-3 text-left">
+                                    Recommended Product
+                                </th>
+                                <th className="px-4 py-3 text-left">
+                                    Recommendation Reason
+                                </th>
+                                <th className="px-4 py-3 text-left">
+                                    Date & Time
+                                </th>
+                                <th className="px-4 py-3 text-left">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {recommendations.map((rec, index) => (
                                 <tr
                                     key={rec._id}
                                     className="border border-base-300 text-neutral">
-                                    <td className="py-3 px-4">{index + 1}</td>
-                                    <td className="py-3 px-4">
+                                    <td className="px-4 py-3">{index + 1}</td>
+                                    <td className="px-4 py-3">
                                         {rec.recommendationTitle}
                                     </td>
-                                    <td className="py-3 px-4">
+                                    <td className="px-4 py-3">
+                                        {rec.recommendedProductName}
+                                    </td>
+                                    <td className="px-4 py-3">
+                                        {rec.recommendationReason}
+                                        
+                                    </td>
+                                    <td className="px-4 py-3">
                                         {new Date(
                                             rec.createdAt
-                                        ).toLocaleDateString()}
+                                        ).toLocaleString()}
                                     </td>
-                                    <td className="py-3 px-4">
+                                    <td className="px-4 py-3">
                                         <button
                                             onClick={() =>
-                                                handleDeleteRecommendation(rec._id,rec.queryId)
+                                                handleDeleteRecommendation(
+                                                    rec._id,
+                                                    rec.queryId
+                                                )
                                             }
                                             className="btn btn-error btn-outline btn-sm">
                                             Delete
                                         </button>
                                     </td>
                                 </tr>
-                            );
-                        })}
-                        {recommendations.length === 0 && (
-                            <tr>
-                                <td
-                                    colSpan="6"
-                                    className="text-center py-6 text-gray-500">
-                                    No recommendations to show.
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </div>
     );
 };
