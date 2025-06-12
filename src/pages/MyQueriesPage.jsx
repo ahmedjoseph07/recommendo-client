@@ -76,6 +76,10 @@ const MyQueriesPage = () => {
         });
     };
 
+        const sortedMyQueries = [...myQueries].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+
     if (loading) {
         return <Loading />;
     }
@@ -100,7 +104,7 @@ const MyQueriesPage = () => {
                 </Link>
             </div>
 
-            {myQueries.length === 0 ? (
+            {sortedMyQueries.length === 0 ? (
                 <div className="text-center space-y-4 mt-10">
                     <p className="text-lg">
                         You haven't added any queries yet.
@@ -113,7 +117,7 @@ const MyQueriesPage = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {myQueries.map((query, index) => (
+                    {sortedMyQueries.map((query, index) => (
                         <motion.div
                             key={query._id}
                             className="bg-base-100 border group rounded-xl p-5 border-base-300 shadow hover:shadow-2xl duration-400 hover:scale-105 cursor-pointer"
@@ -129,7 +133,7 @@ const MyQueriesPage = () => {
                                 <span className="font-semibold">
                                     {new Date(
                                         query.createdAt
-                                    ).toLocaleDateString()}
+                                    ).toLocaleString()}
                                 </span>
                             </p>
                             <div className="flex flex-wrap gap-2">

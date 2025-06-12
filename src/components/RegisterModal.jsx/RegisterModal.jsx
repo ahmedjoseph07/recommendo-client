@@ -23,6 +23,7 @@ const RegisterModal = () => {
             navigate("/");
         } catch (err) {
             console.error("Google Login failed:", err);
+            
         }
     };
 
@@ -38,13 +39,16 @@ const RegisterModal = () => {
 
         if (!displayName || !email || !password || !photoURL) {
             setError("All fields are required");
+            setLoading(false)
             return;
         } else if (!hasUppercase || !hasLowercase) {
+            setLoading(false)
             setError(
                 "Password must contain at least one uppercase and lowercase character"
             );
             return;
         } else if (password.length < 6) {
+            setLoading(false)
             setError("Password must have at least 6 characters");
             return;
         }
@@ -92,6 +96,7 @@ const RegisterModal = () => {
                     setError("Email already in use");
                 } else {
                     setError(err.message);
+                    
                 }
             })
             .finally(() => setLoading(false));

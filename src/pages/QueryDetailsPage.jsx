@@ -18,6 +18,7 @@ const QueryDetailsPage = () => {
         axios(`${import.meta.env.VITE_SERVER_URL}/api/query/${id}`)
             .then((res) => {
                 setQuery(res.data);
+                console.log(res.data)
                 setLoading(false);
             })
             .catch((err) => {
@@ -31,7 +32,7 @@ const QueryDetailsPage = () => {
             .then((res) => {
                 setRecommendations(res.data);
                 setLoading(false);
-                console.log(res.data);
+                // console.log(res.data);
             })
             .catch((err) => {
                 console.error(err);
@@ -49,10 +50,15 @@ const QueryDetailsPage = () => {
         const recommendationData = {
             ...formData,
             queryId: id,
+            queryTitle:query.queryTitle,
+            productName:query.productName,
+            queryUserEmail: query.userEmail,
+            queryUserName:query.userName,
             recommenderEmail: user.email,
             recommenderName: user.displayName,
             createdAt: new Date(),
         };
+        console.log( recommendationData)
 
         axios
             .post(`${import.meta.env.VITE_SERVER_URL}/api/add-recommendation`, {
@@ -81,7 +87,7 @@ const QueryDetailsPage = () => {
     return (
         <div className="w-11/12 md:w-8/12 mx-auto px-6 py-10 space-y-10">
             <div className="bg-base-200 p-6 rounded-2xl shadow-xl">
-                <h3 className="text-2xl font-bold mb-4">User Information</h3>
+                <h3 className="text-2xl font-bold mb-4">Query Details</h3>
                 <p>
                     <span className="font-semibold">Name:</span>{" "}
                     {query.userName}
@@ -90,10 +96,17 @@ const QueryDetailsPage = () => {
                     <span className="font-semibold">Email:</span>{" "}
                     {query.userEmail}
                 </p>
-
                 <p>
                     <span className="font-semibold">Product:</span>{" "}
                     {query.productName}
+                </p>
+                <p>
+                    <span className="font-semibold">Boycotting Reason:</span>{" "}
+                    {query.boycottingReason}
+                </p>
+                <p>
+                    <span className="font-semibold">Created At:</span>{" "}
+                    {new Date(query.createdAt).toLocaleString()}
                 </p>
                 <p>
                     <span className="font-semibold">Query Title:</span>{" "}

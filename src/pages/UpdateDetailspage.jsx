@@ -133,17 +133,6 @@ const UpdateDetailspage = () => {
                             className="border border-secondary p-4 rounded-xl w-full focus:outline-none"></textarea>
                     </div>
 
-                    <div>
-                        <label className="font-semibold">
-                            Profile Image URL
-                        </label>
-                        <input
-                            type="text"
-                            name="profileImg"
-                            defaultValue={query.profileImg}
-                            className="border border-secondary p-4 rounded-xl w-full focus:outline-none"
-                        />
-                    </div>
 
                     <button
                         type="submit"

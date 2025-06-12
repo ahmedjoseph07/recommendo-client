@@ -7,9 +7,10 @@ import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal.jsx/RegisterModal";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import Swal from "sweetalert2";
+import { Tooltip } from "react-tooltip";
 const Navbar = () => {
     const { user, logOut } = use(AuthContext);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         logOut()
@@ -21,7 +22,7 @@ const Navbar = () => {
                     showConfirmButton: false,
                     timer: 1200,
                 });
-                navigate('/')
+                navigate("/");
             })
             .catch((err) => {
                 console.log(err);
@@ -71,37 +72,46 @@ const Navbar = () => {
                     Queries
                 </NavLink>
             </li>
-            {
-                user && <>
-                <li> <NavLink
-                    to="/recommended-for-me"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
-                            : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
-                    }>
-                    Recommended For Me
-                </NavLink></li>
-                <li> <NavLink
-                    to="/my-queries"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
-                            : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
-                    }>
-                    My Queries
-                </NavLink></li>
-                <li> <NavLink
-                    to="/my-recommendations"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
-                            : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
-                    }>
-                    My Recommendations
-                </NavLink></li>
+            {user && (
+                <>
+                    <li>
+                        {" "}
+                        <NavLink
+                            to="/recommended-for-me"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
+                                    : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
+                            }>
+                            Recommended For Me
+                        </NavLink>
+                    </li>
+                    <li>
+                        {" "}
+                        <NavLink
+                            to="/my-queries"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
+                                    : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
+                            }>
+                            My Queries
+                        </NavLink>
+                    </li>
+                    <li>
+                        {" "}
+                        <NavLink
+                            to="/my-recommendations"
+                            className={({ isActive }) =>
+                                isActive
+                                    ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
+                                    : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
+                            }>
+                            My Recommendations
+                        </NavLink>
+                    </li>
                 </>
-            }
+            )}
         </>
     );
 
@@ -121,7 +131,7 @@ const Navbar = () => {
                         </button>
                     </div>
 
-                    <Link  to="/" className="w-12 hidden md:block">
+                    <Link to="/" className="w-12 hidden md:block">
                         <img src={logo} alt="Logo" />
                     </Link>
                     <Link
@@ -139,11 +149,22 @@ const Navbar = () => {
                     <ThemeToggleBtn />
                     {user ? (
                         <>
-                            <img className="w-10" src={user.photoURL} alt="" />
+                            <Tooltip
+                                id="my-tooltip"
+                                place="left"
+                                style={{ zIndex: 99 }}
+                            />
+                            <img
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content={user.displayName}
+                                className="w-10 cursor-pointer"
+                                src={user.photoURL}
+                                alt=""
+                            />
                             <button
                                 onClick={handleLogout}
                                 className="btn btn-accent btn-outline text-neutral">
-                                Logout
+                                Logout 
                             </button>
                         </>
                     ) : (
