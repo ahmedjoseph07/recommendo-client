@@ -34,6 +34,7 @@ const LoginModal = () => {
         const { email, password } = formData;
         login(email, password)
             .then((result) => {
+                // result.user.getIdToken(true)
                 setUser(result.user);
                 e.target.reset()
                 document.getElementById("login_modal").checked = false;

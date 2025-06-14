@@ -5,7 +5,7 @@ const trendingBrands = ["Samsung", "Pepsi", "Dell", "Apple", "Rolex", "Gucci","T
 const Trending = () => {
     return (
         <div className="w-11/12 md:w-10/12 mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">
+            <h2 className="text-2xl text-primary md:text-3xl font-bold mb-6">
                 Trending Brands
             </h2>
             <div className="flex flex-wrap justify-center gap-4">

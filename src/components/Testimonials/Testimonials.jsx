@@ -22,7 +22,7 @@ const testimonials = [
 const Testimonials = () => {
     return (
         <div className="w-11/12 md:w-10/12 mx-auto my-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
+            <h2 className="text-2xl text-primary md:text-3xl font-bold text-center mb-6">
                 Testimonials
             </h2>
             <Marquee pauseOnHover={true} speed={40}>

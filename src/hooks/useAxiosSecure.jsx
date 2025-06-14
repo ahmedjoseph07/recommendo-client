@@ -1,18 +1,23 @@
 import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
+import { getAuth } from "firebase/auth";
 
 const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_SERVER_URL,
-    withCredentials:true,
+    withCredentials: true,
 })
 
-const useAxiosSecure = () => {
+const useAxiosSecure =() => {
 
-    const {logOut,user} = useContext(AuthContext);
-    const token = user?.accessToken;
-    axiosInstance.interceptors.request.use(config=>{
-        config.headers.Authorization = `Bearer ${token}`
+    const {logOut} = useContext(AuthContext);
+
+    axiosInstance.interceptors.request.use(async(config)=>{
+        const currentUser = getAuth().currentUser;
+        if(currentUser){
+            const token = await currentUser.getIdToken()
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     })
 

@@ -63,7 +63,7 @@ const MyQueriesPage = () => {
                         });
                     })
                     .catch((err) => {
-                        console.err(err);
+                        console.error(err);
                         Swal.fire({
                             title: "Error!",
                             text: "Something went wrong while deleting.",
@@ -85,7 +85,7 @@ const MyQueriesPage = () => {
 
     return (
         <div className="w-11/12 md:w-10/12 mx-auto my-10">
-            <h1 className="text-2xl md:text-3xl font-bold text-start mb-8">My Queries</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-start mb-8 text-primary text-center md:text-start">My Queries</h1>
             <div className="bg-base-200 p-6 rounded-xl text-center mb-8 shadow">
                 <h2 className="md:text-xl md:text-3xl font-semibold mb-3">
                     Explore Your  Queries
@@ -103,7 +103,7 @@ const MyQueriesPage = () => {
                 </Link>
             </div>
 
-            {sortedMyQueries.length === 0 ? (
+            {sortedMyQueries?.length === 0 ? (
                 <div className="text-center space-y-4 mt-10">
                     <p className="text-lg">
                         You haven't added any queries yet.

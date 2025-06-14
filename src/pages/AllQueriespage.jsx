@@ -69,7 +69,7 @@ const AllQueriesPage = () => {
     return (
         <div className="w-11/12 md:w-10/12 mx-auto my-10">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
-                <h2 className="text-2xl md:text-3xl font-bold">All Queries</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-primary text-center md:text-start">All Queries</h2>
                 <div className="flex items-center gap-2 w-full md:w-auto">
                     <div className="relative w-full max-w-md">
                         <span className="absolute inset-y-0 left-0 pl-3 flex items-center">

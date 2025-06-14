@@ -8,7 +8,7 @@ const Hero = () => {
         <div className="w-11/12 md:w-10/12 mx-auto my-12">
             <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
                 <div className="flex-grow text-center md:text-left">
-                    <h1 className="text-2xl md:text-3xl font-bold mb-4">
+                    <h1 className="text-2xl md:text-3xl text-primary font-bold mb-4">
                         Find the Best Recommendations for You
                     </h1>
                     <p className="text-neutral text-sm md:text-base max-w-xl">
