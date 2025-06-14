@@ -2,7 +2,7 @@ import Marquee from "react-fast-marquee";
 
 const testimonials = [
     {
-        name: "Ayesha Rahman",
+        name: "Ayush Rahman",
         message: "Recomendo helped me find the perfect phone in seconds!",
     },
     {
@@ -10,7 +10,7 @@ const testimonials = [
         message: "Super accurate suggestions. I love this platform!",
     },
     {
-        name: "Sadia Karim",
+        name: "Ankita Tahrin",
         message: "Easy to use and very helpful for my daily choices.",
     },
     {
