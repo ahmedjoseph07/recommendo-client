@@ -30,7 +30,6 @@ const RecommendedPage = () => {
                         createdAt: new Date(rec.createdAt).toLocaleString(),
                     }))
                 );
-                console.log(allRecs)
                 setRecommendations(allRecs);
                 setLoading(false);
             })

@@ -1,13 +1,15 @@
 import React from "react";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
-import axios from "axios";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import axios from "axios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 const AddQueryPage = () => {
 
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
+    const axiosSecure = useAxiosSecure()
 
     const handleAddQuery = async (e) => {
         e.preventDefault();
@@ -21,8 +23,8 @@ const AddQueryPage = () => {
             recommendationCount: 0,
         };
         try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_SERVER_URL}/api/add-query`,
+            const response = await axiosSecure.post(
+                `/api/add-query`,
                 { queryData }
             );
             if (response.status === 201) {

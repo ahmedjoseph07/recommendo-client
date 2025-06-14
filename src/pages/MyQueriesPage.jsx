@@ -7,18 +7,17 @@ import { AuthContext } from "../contexts/AuthContext/AuthContext";
 import { useState } from "react";
 import Loading from "../components/Loading/Loading";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyQueriesPage = () => {
     const { user, loading, setLoading } = useContext(AuthContext);
     const [myQueries, setMyQueries] = useState([]);
 
+    const axiosSecure = useAxiosSecure();
+    
     useEffect(() => {
         if (user && user.email) {
-            axios(
-                `${import.meta.env.VITE_SERVER_URL}/api/my-queries?email=${
-                    user.email
-                }`
-            )
+            axiosSecure(`/api/my-queries?email=${user.email}`)
                 .then((res) => {
                     setMyQueries(res.data);
                     setLoading(false);
@@ -28,7 +27,7 @@ const MyQueriesPage = () => {
                     setLoading(false);
                 });
         }
-    }, [user, setLoading]);
+    }, [user, setLoading,axiosSecure]);
 
     const handleDeleteQuery = (id) => {
         Swal.fire({

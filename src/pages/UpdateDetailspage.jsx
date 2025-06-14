@@ -19,7 +19,6 @@ const UpdateDetailspage = () => {
                 setQuery(res.data);
                 setOriginalQuery(res.data);
                 setLoading(false);
-                console.log(res.data);
             })
             .catch((err) => {
                 console.error(err);
@@ -66,8 +65,6 @@ const UpdateDetailspage = () => {
             .catch((err) => {
                 console.error(err);
             });
-
-        console.log(formData);
     };
 
     if (loading) return <Loading />;

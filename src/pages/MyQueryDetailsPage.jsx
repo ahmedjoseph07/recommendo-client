@@ -26,7 +26,6 @@ const QueryDetailsPage = () => {
             .then((res) => {
                 setRecommendations(res.data);
                 setLoading(false);
-                console.log(res.data);
             })
             .catch((err) => {
                 console.error(err);

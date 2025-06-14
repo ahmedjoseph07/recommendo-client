@@ -85,7 +85,7 @@ const AllQueriesPage = () => {
                     </div>
                     <button
                         onClick={() => setLayout("grid")}
-                        className={`btn btn-sm ${
+                        className={`btn btn-sm hidden md:block ${
                             layout === "grid" ? "btn-accent" : "btn-ghost"
                         }`}
                         title="Grid View">
@@ -93,7 +93,7 @@ const AllQueriesPage = () => {
                     </button>
                     <button
                         onClick={() => setLayout("list")}
-                        className={`btn btn-sm ${
+                        className={`btn btn-sm hidden md:block ${
                             layout === "list" ? "btn-accent" : "btn-ghost"
                         }`}
                         title="List View">

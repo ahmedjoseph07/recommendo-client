@@ -18,7 +18,6 @@ const QueryDetailsPage = () => {
         axios(`${import.meta.env.VITE_SERVER_URL}/api/query/${id}`)
             .then((res) => {
                 setQuery(res.data);
-                console.log(res.data)
                 setLoading(false);
             })
             .catch((err) => {
@@ -32,7 +31,6 @@ const QueryDetailsPage = () => {
             .then((res) => {
                 setRecommendations(res.data);
                 setLoading(false);
-                // console.log(res.data);
             })
             .catch((err) => {
                 console.error(err);
@@ -58,7 +56,6 @@ const QueryDetailsPage = () => {
             recommenderName: user.displayName,
             createdAt: new Date(),
         };
-        console.log( recommendationData)
 
         axios
             .post(`${import.meta.env.VITE_SERVER_URL}/api/add-recommendation`, {
