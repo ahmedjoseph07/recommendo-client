@@ -10,7 +10,7 @@ const testimonials = [
         message: "Super accurate suggestions. I love this platform!",
     },
     {
-        name: "Ankita Tahrin",
+        name: "Ankita Ahmed",
         message: "Easy to use and very helpful for my daily choices.",
     },
     {

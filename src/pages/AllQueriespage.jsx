@@ -42,7 +42,7 @@ const AllQueriesPage = () => {
     useEffect(() => {
         axios(`${import.meta.env.VITE_SERVER_URL}/api/queries`)
             .then((res) => {
-                setQueries((res.data));
+                setQueries(res.data);
                 setLoading(false);
             })
             .catch((err) => {
@@ -69,7 +69,9 @@ const AllQueriesPage = () => {
     return (
         <div className="w-11/12 md:w-10/12 mx-auto my-10">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
-                <h2 className="text-2xl md:text-3xl font-bold text-primary text-center md:text-start">All Queries</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-primary text-center md:text-start">
+                    All Queries
+                </h2>
                 <div className="flex items-center gap-2 w-full md:w-auto">
                     <div className="relative w-full max-w-md">
                         <span className="absolute inset-y-0 left-0 pl-3 flex items-center">
@@ -132,9 +134,9 @@ const AllQueriesPage = () => {
                         {filteredQuries.map((query, index) => (
                             <motion.div
                                 key={query._id}
-                                className={`border border-base-300 rounded-xl p-5 shadow-md hover:shadow-2xl hover:scale-105 duration-400 transition-all group cursor-pointer bg-base-100 ${
+                                className={`border border-base-300 rounded-xl p-4 sm:p-5 shadow-md hover:shadow-2xl hover:scale-[1.02] duration-300 transition-all group cursor-pointer bg-base-100 w-full ${
                                     layout === "list"
-                                        ? "w-11/12 md:w-8/12 mx-auto"
+                                        ? "max-w-full sm:w-10/12 mx-auto"
                                         : ""
                                 }`}
                                 initial={{ opacity: 0, y: 20 }}
@@ -147,7 +149,7 @@ const AllQueriesPage = () => {
                                     <span className="text-xs text-neutral opacity-70">
                                         {new Date(
                                             query.createdAt
-                                        ).toLocaleString()}
+                                        ).toLocaleDateString()}
                                     </span>
                                 </div>
 
@@ -159,9 +161,9 @@ const AllQueriesPage = () => {
                                 </p>
 
                                 <div className="flex justify-between items-center">
-                                    <span className="text-lg text-secondary font-medium">
+                                    <span className="text-sx text-secondary font-medium">
                                         {query.recommendationCount}{" "}
-                                        Recommendations
+                                        Recommendo
                                     </span>
 
                                     <button
