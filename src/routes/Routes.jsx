@@ -15,6 +15,7 @@ import AddQueryPage from "../pages/AddQueryPage";
 import QueryDetailsPage from "../pages/QueryDetailsPage";
 import MyQueryDetailsPage from "../pages/MyQueryDetailsPage";
 import UpdateDetailspage from "../pages/UpdateDetailspage";
+import HowItWorksPage from "../pages/HowItWorksPage";
 
 export const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
             {
                 path: "/my-recommendations",
                 element: <MyRecommendationsPage />,
+            },
+            {
+                path: "/how-it-works",
+                element: <HowItWorksPage />,
             },
             {
                 path: "/about",

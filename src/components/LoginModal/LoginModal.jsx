@@ -7,7 +7,7 @@ const LoginModal = () => {
     const { googleLogin, login, setUser } = use(AuthContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [error,setError] = useState("")
+    const [error, setError] = useState("");
 
     const handleGoogleLogin = async () => {
         try {
@@ -20,12 +20,13 @@ const LoginModal = () => {
                 showConfirmButton: false,
                 timer: 1200,
             });
-            
+
             navigate("/");
         } catch (err) {
             console.error("Google Login failed:", err);
         }
     };
+    
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -36,7 +37,7 @@ const LoginModal = () => {
             .then((result) => {
                 // result.user.getIdToken(true)
                 setUser(result.user);
-                e.target.reset()
+                e.target.reset();
                 document.getElementById("login_modal").checked = false;
                 Swal.fire({
                     position: "top-end",
@@ -48,13 +49,15 @@ const LoginModal = () => {
                 navigate("/");
             })
             .catch((err) => {
-                if(err.message == "Firebase: Error (auth/invalid-credential)."){
-                    setError("Invalid Credentials")
-                }else{
-                    setError(err.message)
+                if (
+                    err.message == "Firebase: Error (auth/invalid-credential)."
+                ) {
+                    setError("Invalid Credentials");
+                } else {
+                    setError(err.message);
                 }
             })
-            .finally(()=>setLoading(false))
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -72,7 +75,7 @@ const LoginModal = () => {
                             className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full"
                             required
                             name="email"
-                            onChange={()=>setError("")}
+                            onChange={() => setError("")}
                         />
                         <input
                             type="password"
@@ -80,13 +83,15 @@ const LoginModal = () => {
                             className="border border-secondary/30 p-4 rounded-xl focus:outline-0 w-full"
                             required
                             name="password"
-                            onChange={()=>setError("")}
+                            onChange={() => setError("")}
                         />
                         {error && <p className="text-xs text-error">{error}</p>}
                         <button className="btn btn-primary btn-outline border-secondary/30 border-1 w-full mt-2">
-                            {
-                                loading ? <span className="loading loading-spinner text-accent loading-sm"></span> : "Login"
-                            }
+                            {loading ? (
+                                <span className="loading loading-spinner text-accent loading-sm"></span>
+                            ) : (
+                                "Login"
+                            )}
                         </button>
                     </form>
 

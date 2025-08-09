@@ -87,7 +87,7 @@ const MyQueriesPage = () => {
         <div className="w-11/12 md:w-10/12 mx-auto my-10">
             <h1 className="text-2xl md:text-3xl font-bold mb-8 text-primary text-center md:text-start">My Queries</h1>
             <div className="bg-base-200 p-6 rounded-xl text-center mb-8 shadow">
-                <h2 className="md:text-xl md:text-3xl font-semibold mb-3">
+                <h2 className="md:text-3xl font-semibold mb-3">
                     Explore Your  Queries
                 </h2>
                 <p className="py-4">

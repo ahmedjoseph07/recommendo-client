@@ -72,6 +72,17 @@ const Navbar = () => {
                     Queries
                 </NavLink>
             </li>
+            <li>
+                <NavLink
+                    to="/how-it-works"
+                    className={({ isActive }) =>
+                        isActive
+                            ? "bg-primary/10 text-primary font-bold px-3 py-2 rounded-md block"
+                            : `font-semibold px-3 py-2 rounded-md block ${navItemStyle}`
+                    }>
+                    User Guide
+                </NavLink>
+            </li>
             {user && (
                 <>
                     <li>
@@ -116,79 +127,81 @@ const Navbar = () => {
     );
 
     return (
-        <div className="w-full border-b border-secondary shadow-sm">
-            <div className="py-4 w-10/12 md:w-11/12 mx-auto flex justify-between items-center  px-4 relative z-20">
-                <div className="flex items-center gap-4">
-                    <div className="lg:hidden">
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="p-2 rounded-md">
-                            {isOpen ? (
-                                <RxCross2 className="h-6 w-6" />
-                            ) : (
-                                <RxHamburgerMenu className="h-6 w-6" />
-                            )}
-                        </button>
+        <nav className="w-full sticky top-0 z-50 shadow-xl">
+            <div className="backdrop-blur-lg ">
+                <div className="py-4 w-10/12 md:w-11/12 mx-auto flex justify-between items-center  px-4 relative z-20">
+                    <div className="flex items-center gap-4">
+                        <div className="lg:hidden">
+                            <button
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="p-2 rounded-md">
+                                {isOpen ? (
+                                    <RxCross2 className="h-6 w-6" />
+                                ) : (
+                                    <RxHamburgerMenu className="h-6 w-6" />
+                                )}
+                            </button>
+                        </div>
+
+                        <Link to="/" className="w-12 hidden md:block">
+                            <img src={logo} alt="Logo" />
+                        </Link>
+                        <Link
+                            className="text-xl text-primary font-bold hidden md:block"
+                            to="/">
+                            Recommendo
+                        </Link>
                     </div>
 
-                    <Link to="/" className="w-12 hidden md:block">
-                        <img src={logo} alt="Logo" />
-                    </Link>
-                    <Link
-                        className="text-xl text-primary font-bold hidden md:block"
-                        to="/">
-                        Recommendo
-                    </Link>
-                </div>
+                    <div className="hidden lg:flex">
+                        <ul className="flex gap-4 px-1 text-md">{navLinks}</ul>
+                    </div>
 
-                <div className="hidden lg:flex">
-                    <ul className="flex gap-4 px-1 text-md">{navLinks}</ul>
-                </div>
+                    <div className="flex items-center gap-4">
+                        <ThemeToggleBtn />
+                        {user ? (
+                            <>
+                                <Tooltip
+                                    id="my-tooltip"
+                                    place="left"
+                                    style={{ zIndex: 99 }}
+                                />
+                                <img
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content={user.displayName}
+                                    className="w-10 cursor-pointer"
+                                    src={user.photoURL}
+                                    alt=""
+                                />
+                                <button
+                                    onClick={handleLogout}
+                                    className="btn btn-accent btn-outline text-neutral">
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <label
+                                htmlFor="login_modal"
+                                className="btn btn-primary btn-outline normal-case">
+                                Login
+                            </label>
+                        )}
+                    </div>
 
-                <div className="flex items-center gap-4">
-                    <ThemeToggleBtn />
-                    {user ? (
-                        <>
-                            <Tooltip
-                                id="my-tooltip"
-                                place="left"
-                                style={{ zIndex: 99 }}
-                            />
-                            <img
-                                data-tooltip-id="my-tooltip"
-                                data-tooltip-content={user.displayName}
-                                className="w-10 cursor-pointer"
-                                src={user.photoURL}
-                                alt=""
-                            />
-                            <button
-                                onClick={handleLogout}
-                                className="btn btn-accent btn-outline text-neutral">
-                                Logout 
-                            </button>
-                        </>
-                    ) : (
-                        <label
-                            htmlFor="login_modal"
-                            className="btn btn-primary btn-outline normal-case">
-                            Login
-                        </label>
-                    )}
-                </div>
-
-                <div
-                    ref={dropdownRef}
-                    className={`absolute left-4 right-4 top-20 mx-auto w-[90%] border border-secondary text-neutral shadow-lg space-y-4 transform transition-all duration-300 ease-in-out lg:hidden ${
-                        isOpen
-                            ? "translate-y-8 opacity-100 pointer-events-auto"
-                            : "-translate-y-8 opacity-0 pointer-events-none"
-                    }`}>
-                    <ul className="text-center bg-secondary">{navLinks}</ul>
+                    <div
+                        ref={dropdownRef}
+                        className={`absolute left-4 right-4 top-20 mx-auto w-[90%] border border-secondary text-neutral shadow-lg space-y-4 transform transition-all duration-300 ease-in-out lg:hidden ${
+                            isOpen
+                                ? "translate-y-8 opacity-100 pointer-events-auto"
+                                : "-translate-y-8 opacity-0 pointer-events-none"
+                        }`}>
+                        <ul className="text-center bg-secondary">{navLinks}</ul>
+                    </div>
                 </div>
             </div>
-            <LoginModal />
             <RegisterModal />
-        </div>
+            <LoginModal />
+        </nav>
     );
 };
 

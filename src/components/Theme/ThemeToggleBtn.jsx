@@ -17,11 +17,11 @@ const ThemeToggleBtn = () => {
     };
 
     return (
-        <button onClick={toggleTheme} className="btn btn-md btn-transparent border-0 ">
+        <button onClick={toggleTheme} className="cursor-pointer mr-2 border-0 ">
             {theme === "light" ? (
-                <FiMoon className="w-6 h-6 text-neutral" />
+                <FiMoon className="w-6 h-6"/>
             ) : (
-                <FiSun className="w-6 h-6 text-neutral" />
+                <FiSun className="w-6 h-6"/>
             )}
         </button>
     );
