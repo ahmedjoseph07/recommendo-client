@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Loading from "../../components/Loading/Loading"
 
 const SendFeedback = () => {
     const [email, setEmail] = useState("");
@@ -69,7 +70,7 @@ const SendFeedback = () => {
                     type="submit"
                     className="btn btn-primary btn-outline border-secondary/30"
                     disabled={loading}>
-                    {loading ? "Sending..." : "Send Feedback"}
+                    {loading ? <><Loading/>"Sending"</> : "Send Feedback"}
                 </button>
             </form>
             {statusMessage && (
