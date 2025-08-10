@@ -6,15 +6,15 @@ import { Link } from "react-router";
 const Hero = () => {
     return (
         <div className="w-11/12 md:w-10/12 mx-auto my-12">
-            <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
-                <div className="flex-grow text-center md:text-left">
-                    <h1 className="text-2xl md:text-3xl text-primary font-bold mb-4">
+            <div className="flex flex-col md:flex-row items-center md:items-center justify-center gap-8">
+                <div className="text-center">
+                    <h1 className="text-3xl md:text-4xl text-primary font-bold mb-4">
                         Find the Best Recommendations for You
                     </h1>
                     <p className="text-neutral text-sm md:text-base max-w-xl">
                         From top gadgets to trusted services, get curated
                         recommendations tailored to your needs — all in one
-                        place. Simplify your search with Recomendo.
+                        place. Simplify your search with Recommendo.
                     </p>
                     <div className="py-4 font-bold text-accent text-xl">
                         <Typewriter
@@ -34,9 +34,6 @@ const Hero = () => {
                     <Link to='/queries' className="btn btn-outline btn-primary px-6 py-2 rounded-lg font-semibold shadow-md hover:shadow-xl transition-all duration-300">
                         Start Exploring
                     </Link>
-                </div>
-                <div>
-                    <Trending />
                 </div>
             </div>
         </div>

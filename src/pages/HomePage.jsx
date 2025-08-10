@@ -4,6 +4,7 @@ import SlideShow from '../components/SlideShow/SlideShow';
 import RecentQueries from '../components/RecentQueries/RecentQueries';
 import Testimonials from '../components/Testimonials/Testimonials';
 import Hero from '../components/Hero/Hero';
+import Trending from '../components/Trending/Trending';
 
 const HomePage = () => {
     
@@ -12,6 +13,7 @@ const HomePage = () => {
             <SlideShow/>
             <Hero/>
             <RecentQueries/>
+            <Trending/>
             <Testimonials/>
         </div>
     );
