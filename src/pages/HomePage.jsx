@@ -4,6 +4,7 @@ import RecentQueries from '../components/RecentQueries/RecentQueries';
 import Testimonials from '../components/Testimonials/Testimonials';
 import Hero from '../components/Hero/Hero';
 import Trending from '../components/Trending/Trending';
+import Feedback from '../components/FeedBack/FeedBack';
 
 const HomePage = () => {
     
@@ -14,6 +15,7 @@ const HomePage = () => {
             <RecentQueries/>
             <Trending/>
             <Testimonials/>
+            <Feedback/>
         </div>
     );
 };

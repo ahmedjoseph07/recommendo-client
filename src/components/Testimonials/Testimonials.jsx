@@ -15,14 +15,14 @@ const testimonialsData = [
         image: "https://randomuser.me/api/portraits/men/44.jpg",
     },
     {
-        name: "Joseph Ahmed",
+        name: "Rifat Hossain",
         quote: "Easy to use and very helpful for my daily choices.",
         role: "Freelancer",
         image: "https://randomuser.me/api/portraits/men/12.jpg",
     },
     {
-        name: "Rifat Hossain",
-        quote: "Highly recommended for anyone looking for honest guidance.",
+        name: "Joseph Ahmed",
+        quote: "Highly recommended for anyone looking for guidance.",
         role: "Marketing Specialist",
         image: "https://randomuser.me/api/portraits/men/78.jpg",
     },
@@ -73,7 +73,7 @@ const Testimonials = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.5 }}
-                        className="cursor-pointer group p-8 rounded-xl shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-400 border border-gray-300 bg-white flex flex-col items-center">
+                        className="cursor-pointer group p-8 rounded-xl shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-400  flex flex-col items-center">
                         <img
                             src={testimonialsData[current].image}
                             alt={testimonialsData[current].name}
@@ -96,13 +96,13 @@ const Testimonials = () => {
                 <button
                     onClick={prevSlide}
                     aria-label="Previous testimonial"
-                    className="absolute cursor-pointer inset-y-0 left-0 flex items-center px-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
+                    className="absolute border-l border-secondary cursor-pointer inset-y-0 left-0 flex items-center px-2  rounded-full shadow  transition">
                     &#8592;
                 </button>
                 <button
                     onClick={nextSlide}
                     aria-label="Next testimonial"
-                    className="absolute cursor-pointer inset-y-0 right-0 flex items-center px-2 bg-white rounded-full shadow hover:bg-gray-100 transition">
+                    className="absolute border-r border-secondary cursor-pointer inset-y-0 right-0 flex items-center px-2  rounded-full shadow  transition">
                     &#8594;
                 </button>
             </div>

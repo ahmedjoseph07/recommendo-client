@@ -93,7 +93,7 @@ const Trending = () => {
                         <div className="flex justify-between w-full items-center mb-2">
                             <h3 className="text-lg font-bold group-hover:text-primary">{brand.name}</h3>
                             <span
-                                className={`text-sm font-semibold px-2 py-1 rounded-full ${statusColors[brand.status] || "bg-gray-200 text-gray-700"}`}
+                                className={`text-xs font-semibold px-2 py-1 rounded-full ${statusColors[brand.status] || "bg-gray-200 text-gray-700"}`}
                             >
                                 {brand.status}
                             </span>
