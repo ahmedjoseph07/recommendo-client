@@ -1,12 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Loading from "../Loading/Loading";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import Swal from "sweetalert2";
 
 const RecentQueries = () => {
     const [queries, setQueries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleSeeMore = async (queryId) => {
+        if (!user) {
+            Swal.fire({
+                icon: "warning",
+                title: "Login Required",
+                text: "Please login to see more.",
+                timer: 1500,
+                showConfirmButton: false,
+            });
+            return;
+        } else {
+            navigate(`/queries/recommend/${queryId}`);
+        }
+    };
 
     useEffect(() => {
         axios(`${import.meta.env.VITE_SERVER_URL}/api/queries`)
@@ -73,6 +93,12 @@ const RecentQueries = () => {
                             <p className="text-sm text-neutral">
                                 Brand: {query.productBrand}
                             </p>
+
+                            <button
+                                onClick={()=>handleSeeMore(query._id)}
+                                className="btn btn-outline btn-secondary my-4">
+                                See More
+                            </button>
                         </motion.div>
                     ))}
                 </div>
