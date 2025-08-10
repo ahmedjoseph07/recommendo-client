@@ -13,6 +13,7 @@ const AllQueriesPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchText, setSearchText] = useState("");
+    const [sortOrder, setSortOrder] = useState("newest");
     const [layout, setLayout] = useState(() => {
         return localStorage.getItem("layout") || "grid";
     });
@@ -57,7 +58,13 @@ const AllQueriesPage = () => {
         .filter((query) =>
             query.productName?.toLowerCase().includes(searchText.toLowerCase())
         )
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        .sort((a, b) => {
+            if (sortOrder === "newest") {
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            } else {
+                return new Date(a.createdAt) - new Date(b.createdAt);
+            }
+        });
 
     if (loading) {
         return <Loading />;
@@ -84,6 +91,25 @@ const AllQueriesPage = () => {
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
                         />
+                    </div>
+
+                    <div className="flex items-center justify-center cup">
+                        <select
+                            id="sort"
+                            value={sortOrder}
+                            onChange={(e) => setSortOrder(e.target.value)}
+                            className="border border-dashed rounded-lg p-2 pl-2 pr-4 text-sm focus:outline-none">
+                            <option
+                                className="bg-secondary text-neutral cursor-pointer"
+                                value="newest">
+                                Newest First
+                            </option>
+                            <option
+                                className="bg-secondary text-neutral cursor-pointer"
+                                value="oldest">
+                                Oldest First
+                            </option>
+                        </select>
                     </div>
                     <button
                         onClick={() => setLayout("grid")}
@@ -162,8 +188,7 @@ const AllQueriesPage = () => {
 
                                 <div className="flex justify-between items-center">
                                     <span className="text-sx text-secondary font-medium">
-                                        {query.recommendationCount}{" "}
-                                        Recommendo
+                                        {query.recommendationCount} Recommendo
                                     </span>
 
                                     <button
