@@ -53,9 +53,14 @@ const RecentQueries = () => {
 
     return (
         <div className="w-11/12 md:w-10/12 mx-auto my-10 min-h-[300px]">
-            <h2 className="text-2xl text-primary md:text-3xl font-bold text-center mb-6">
+            <h2 className="text-2xl md:text-3xl text-primary  font-extrabold text-center mb-6">
                 Recent Queries
             </h2>
+            <p className="text-secondary text-xl md:text-base max-w-2xl text-center mx-auto mb-8">
+                Check out the latest questions and discussions from our
+                community, real people seeking real recommendations. Join the
+                conversation and share your insights.
+            </p>
 
             {sortedQueries.length === 0 ? (
                 <motion.div
@@ -95,7 +100,7 @@ const RecentQueries = () => {
                             </p>
 
                             <button
-                                onClick={()=>handleSeeMore(query._id)}
+                                onClick={() => handleSeeMore(query._id)}
                                 className="btn btn-outline btn-secondary my-4">
                                 See More
                             </button>

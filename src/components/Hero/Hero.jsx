@@ -11,7 +11,7 @@ const Hero = () => {
                     <h1 className="text-3xl md:text-4xl text-primary font-bold mb-4">
                         Find the Best Recommendations for You
                     </h1>
-                    <p className="text-neutral text-sm md:text-base max-w-xl">
+                    <p className="text-secondary text-xl md:text-base max-w-2xl mx-auto">
                         From top gadgets to trusted services, get curated
                         recommendations tailored to your needs — all in one
                         place. Simplify your search with Recommendo.
