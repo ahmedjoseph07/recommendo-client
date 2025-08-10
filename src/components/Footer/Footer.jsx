@@ -5,8 +5,8 @@ import logo from "../../assets/logo.png";
 
 const Footer = () => {
     return (
-        <footer className="border-t border-secondary shadow-sm mt-10">
-            <div className="footer w-10/12 md:w-11/12 mx-auto p-10 text-sm md:text-base flex flex-col md:flex-row md:justify-between gap-10">
+        <footer className="border-t border-secondary shadow-xl mt-10">
+            <div className="footer w-10/12 md:w-11/12 mx-4 md:mx-auto  py-8 px-4 text-sm md:text-base flex flex-col md:flex-row md:justify-between gap-10">
                 <div className="md:w-1/4">
                 <img className="w-10" src={logo} alt="" />
                     <Link
@@ -23,17 +23,11 @@ const Footer = () => {
 
                 <nav>
                     <header className="footer-title text-accent">Pages</header>
-                    <Link to='/' className="link link-hover hover:text-secondary">
-                        Home
-                    </Link>
-                    <Link to='/queries' className="link link-hover hover:text-secondary">
-                        Queries
-                    </Link>
                     <Link to='/about' className="link link-hover hover:text-secondary">
-                        About
+                        About Us
                     </Link>
-                    <Link to='/contact' className="link link-hover hover:text-secondary">
-                        Contact
+                    <Link to='/faq' className="link link-hover hover:text-secondary">
+                    FAQs
                     </Link>
                 </nav>
 

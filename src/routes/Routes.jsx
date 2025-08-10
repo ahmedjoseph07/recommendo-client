@@ -3,7 +3,6 @@ import Root from "../layout/Root";
 import AllQueriespage from "../pages/AllQueriespage";
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
-import ContactPage from "../pages/ContactPage";
 import TermsPage from "../pages/TermsPage";
 import PolicyPage from "../pages/PolicyPage";
 import RecommendationsPage from "../pages/RecommendedPage";
@@ -16,6 +15,7 @@ import QueryDetailsPage from "../pages/QueryDetailsPage";
 import MyQueryDetailsPage from "../pages/MyQueryDetailsPage";
 import UpdateDetailspage from "../pages/UpdateDetailspage";
 import HowItWorksPage from "../pages/HowItWorksPage";
+import FAQ from "../pages/FAQ";
 
 export const router = createBrowserRouter([
     {
@@ -57,8 +57,8 @@ export const router = createBrowserRouter([
                 element: <AboutPage />,
             },
             {
-                path: "/contact",
-                element: <ContactPage />,
+                path: "/faq",
+                element: <FAQ />,
             },
             {
                 path: "/terms",

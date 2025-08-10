@@ -80,7 +80,7 @@ const MyRecommendationsPage = () => {
 
     return (
         <div className="w-11/12 md:w-10/12 mx-auto py-10">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-primary text-center md:text-start">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-primary text-center">
                 My Recommendations
             </h2>
 
